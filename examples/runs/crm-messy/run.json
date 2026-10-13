@@ -1,0 +1,48 @@
+{
+  "dataset": "crm-messy",
+  "date": "2026-10-14",
+  "runner": "tools/blind_run.py: a fresh, non-interactive Claude Code session (claude -p), one run, no retries",
+  "model": "sonnet",
+  "command": "claude -p <prompt> --model sonnet --tools Read,Grep,Glob --safe-mode --strict-mcp-config --no-session-persistence --effort medium --system-prompt <body of agent.md>",
+  "system_prompt": "the body of agent.md after its frontmatter, nothing else",
+  "prompt": "Do the task your instructions describe on the exports in the folder export/ in the current directory. Read only files inside the current directory. Your final answer is saved verbatim as your output, so make it your complete output, exactly as you would present it to the person who asked.",
+  "tools_available": [
+    "Read",
+    "Grep",
+    "Glob"
+  ],
+  "read_only": "enforced by the CLI: --tools leaves the session only these tools, so it cannot write, edit or run anything; the harness saves the final answer as output.md",
+  "context": "--safe-mode: no CLAUDE.md, skills, plugins, hooks or MCP servers. Claude Code still adds its own environment block (working directory, platform, date, account e-mail).",
+  "run_dir": "<run-dir>, an empty folder outside this repo holding only the files below",
+  "files_given": [
+    {
+      "path": "agent.md",
+      "copy_of": ".claude/agents/crm-steward.md",
+      "sha256": "5cd7bae8d02353e1959607c8cad46ff31e7a78696fe2be191132f0a28a118f07"
+    },
+    {
+      "path": "export/activity.csv",
+      "copy_of": "examples/crm/crm-messy/activity.csv",
+      "sha256": "a863d64b5290a795da5bc9a086aa38dabb280f163feed5f8944ad8fcfcd63193"
+    },
+    {
+      "path": "export/contacts.csv",
+      "copy_of": "examples/crm/crm-messy/contacts.csv",
+      "sha256": "bd64c3c4426b141ca92b4529135189840401d6cb86439c1d885b220e628d1943"
+    },
+    {
+      "path": "export/partners.csv",
+      "copy_of": "examples/crm/crm-messy/partners.csv",
+      "sha256": "9ee1e6d0fed782829d7c87bd3c22727843661d0b6fc419719a1cfcd128c249f3"
+    }
+  ],
+  "not_given": [
+    "the pattern doc",
+    "dataset README",
+    "answer keys",
+    "earlier outputs",
+    "the checker"
+  ],
+  "output": "output.md: the session's final answer, line endings normalised to LF, otherwise unedited",
+  "output_sha256": "6a23e4932b7fc647a77ef64befe0fd831747db1948722df6516235556e3c7033"
+}

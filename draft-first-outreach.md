@@ -25,6 +25,10 @@ Outreach is repetitive enough to automate and risky enough that you don't want a
 - It assumes the human review pass actually happens. If drafts pile up unreviewed, you've built a to-do list generator, not an outreach system. Budget calendar time for the review pass.
 - A logged-in browser session can publish, whoever is driving it. If the agent types into the same session a person later sends from, "never sends" is enforced by the agent's permissions and instructions, not by a missing credential. Where a channel has a real drafts folder, a scheduled-post queue or an API with a draft-only scope, stage there instead and keep the agent out of the publishing session.
 
+## Checking it after the fact
+
+[`tools/outreach_check.py`](tools/outreach_check.py) checks an export of the staging queue: every sent draft has a named approval from before it was sent (O1), the text that went out is the text that was approved, by SHA-256 (O2), nothing was sent by the agent (O3), no contact got two messages inside the cooldown (O4), and nothing was staged for an excluded destination (O5). An [example queue](examples/outreach/) has one planted case per rule. There is no shipped agent for this pattern; the check is what makes "the agent never sends" something you can verify rather than assume.
+
 ## Minimal implementation
 
 An agent with browser access, a rules file describing what content maps to what destinations and any exclusions, and a lightweight way to track "already reached" so re-runs don't duplicate outreach. Give the agent the narrowest access that still lets it stage: a drafts-only scope where one exists, otherwise a browser it can type in, with a permission rule that blocks the send/publish action and a person who presses it.

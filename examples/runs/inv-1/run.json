@@ -1,15 +1,24 @@
 {
   "dataset": "inv-1",
-  "date": "2026-10-13",
-  "runner": "Claude Code subagent (general-purpose type), fresh context, one run, no retries",
+  "date": "2026-10-14",
+  "runner": "tools/blind_run.py: a fresh, non-interactive Claude Code session (claude -p), one run, no retries",
   "model": "sonnet",
-  "prompt": "You are running as the agent defined in <run-dir>/agent.md. Read that file first: the text after its frontmatter is your instructions, and its `tools:` line is the only access you may use (Read, Grep, Glob). Then do the task those instructions describe on the export folder <run-dir>/export/ . Read only files inside <run-dir>/ and nothing else on disk. The pattern doc the instructions mention is not provided; work without it. When finished, write your complete output, exactly as you would present it to the person who asked, to <run-dir>/output.md with the Write tool. That is the only file you may write. Then hand back the single word: done.",
-  "prompt_note": "Exact prompt, except that the absolute path of the run folder (a local path) is replaced by <run-dir>.",
+  "command": "claude -p <prompt> --model sonnet --tools Read,Grep,Glob --safe-mode --strict-mcp-config --no-session-persistence --effort medium --system-prompt <body of agent.md>",
+  "system_prompt": "the body of agent.md after its frontmatter, nothing else",
+  "prompt": "Do the task your instructions describe on the exports in the folder export/ in the current directory. Read only files inside the current directory. Your final answer is saved verbatim as your output, so make it your complete output, exactly as you would present it to the person who asked.",
+  "tools_available": [
+    "Read",
+    "Grep",
+    "Glob"
+  ],
+  "read_only": "enforced by the CLI: --tools leaves the session only these tools, so it cannot write, edit or run anything; the harness saves the final answer as output.md",
+  "context": "--safe-mode: no CLAUDE.md, skills, plugins, hooks or MCP servers. Claude Code still adds its own environment block (working directory, platform, date, account e-mail).",
+  "run_dir": "<run-dir>, an empty folder outside this repo holding only the files below",
   "files_given": [
     {
       "path": "agent.md",
       "copy_of": ".claude/agents/inventory-sync.md",
-      "sha256": "b9a6dddb237b37c32b3a2582c00baeb8ea665838bfd47f68f2b64ee456de937b"
+      "sha256": "10e670f5a25be2474abf5fbef152558a3638e7da8a696e56fa65fe6004150195"
     },
     {
       "path": "export/marketplace-a.csv",
@@ -34,7 +43,6 @@
     "earlier outputs",
     "the checker"
   ],
-  "isolation": "The run folder held only agent.md and the export CSVs. Read-only access was set by the prompt, not by a sandbox; the session also loaded the host project's own CLAUDE.md, which is unrelated to these datasets. The only file the run wrote was output.md.",
-  "output": "output.md, copied byte for byte",
-  "output_sha256": "22150ecb7755a11804718451b46e8bd7a42a888a3b504b79e7bb2ed20d9ecc16"
+  "output": "output.md: the session's final answer, line endings normalised to LF, otherwise unedited",
+  "output_sha256": "7b524845f2202c54cc9cfcc718ae8171cf1c0448c7c37aded1226d12965399e0"
 }

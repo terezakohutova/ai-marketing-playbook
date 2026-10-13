@@ -85,7 +85,9 @@ def parse_int(value: str, where: str) -> int:
 
 CONFIRMED = "confirmed"
 HUMAN = "human"
-INVENTORY_RULES = {"I1": CONFIRMED, "I2": HUMAN, "I3": HUMAN, "I4": HUMAN}
+INVENTORY_RULES = {"I1": CONFIRMED, "I2": HUMAN, "I3": HUMAN, "I4": HUMAN, "I5": CONFIRMED, "I6": HUMAN}
+ON_HAND = "on_hand"  # optional column in the source of truth: units actually in stock
+LISTED = "listed_qty"  # optional column in a channel export: units that channel offers
 SOURCE_OF_TRUTH_HINTS = ("storefront", "inventory", "stock", "source-of-truth", "warehouse")
 
 
@@ -139,6 +141,30 @@ def check_inventory(folder: Path, source_of_truth: str | None = None) -> list[Fi
                 add("I1", item, f"{sot_name}=sold, {name}=live")
             else:
                 add("I2", item, f"{sot_name}={truth}, {name}={status}")
+
+    # I5 / I6: multi-unit stock, only where the exports carry quantities.
+    on_hand = {}
+    for n, r in enumerate(files[sot_name], start=2):
+        if r.get(ON_HAND, "") != "":
+            on_hand[r["item_id"]] = parse_int(r[ON_HAND], f"{sot_name} line {n} {ON_HAND}")
+    listed: dict[str, dict[str, int]] = {}
+    for name, rows in files.items():
+        if name == sot_name:
+            continue
+        for n, r in enumerate(rows, start=2):
+            if norm(r["status"]) == "live" and r.get(LISTED, "") != "":
+                qty = parse_int(r[LISTED], f"{name} line {n} {LISTED}")
+                per_item = listed.setdefault(r["item_id"], {})
+                per_item[name] = max(per_item.get(name, 0), qty)
+    for item, per_channel in listed.items():
+        if sot.get(item) != "live" or item not in on_hand:
+            continue  # I1-I3 already cover sold, other and unknown items
+        stock = on_hand[item]
+        over = {c: q for c, q in per_channel.items() if q > stock}
+        if over:
+            add("I5", item, f"{sot_name} on_hand={stock}, " + ", ".join(f"{c} lists {q}" for c, q in over.items()))
+        elif sum(per_channel.values()) > stock:
+            add("I6", item, f"{sot_name} on_hand={stock}, channels list {sum(per_channel.values())} in total")
     return sorted(out.values())
 
 
@@ -156,7 +182,7 @@ CRM_RULES = {
 OPEN = {"prospect", "negotiation", "live"}
 CLOSED = {"paused", "lost"}
 CADENCE = {"A": 14, "B": 30, "C": 60}
-SCHEDULED = ("nightly-sync", "morning-digest")
+HUMAN_SOURCES = {"email"}  # every other `source` in activity.csv is a scheduled job
 BOUNCE_PHRASES = (
     "delivery failure",
     "delivery status notification (failure)",
@@ -166,18 +192,28 @@ BOUNCE_PHRASES = (
     "user unknown",
     "mailbox does not exist",
     "recipient address rejected",
+    "returned mail",
+    "no such user",
 )
 FREE_MAIL = {
     "gmail.com", "googlemail.com", "outlook.com", "hotmail.com", "live.com", "yahoo.com",
     "icloud.com", "aol.com", "proton.me", "protonmail.com", "gmx.de", "gmx.net", "web.de",
 }
 NAME_NOISE = {"co", "company", "inc", "ltd", "llc", "gmbh", "the", "and"}
+SHORT_NAME = 6  # fewer letters than this: a near (not exact) name match needs a second signal
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+RECIPIENT = re.compile(r"\b(final|original)-recipient:\s*(?:rfc822\s*;\s*)?<?([\w.+-]+@[\w-]+(?:\.[\w-]+)+)", re.I)
 
 
 def name_key(name: str) -> str:
     words = re.sub(r"[^\w\s]", " ", name.lower()).split()
     return " ".join(w for w in words if w not in NAME_NOISE)
+
+
+def name_tokens(name: str) -> list[str]:
+    """Normalised words with a plain plural -s dropped, so "Pets" and "Pet" compare equal."""
+    return [w[:-1] if len(w) > 3 and w.endswith("s") and not w.endswith("ss") else w
+            for w in name_key(name).split()]
 
 
 def edit_distance(a: str, b: str, cap: int = 3) -> int:
@@ -192,35 +228,64 @@ def edit_distance(a: str, b: str, cap: int = 3) -> int:
     return min(prev[-1], cap)
 
 
-def near_same_name(a: str, b: str) -> bool:
-    """Equal after normalising, one extends the other with words at the end, or a typo apart."""
-    ka, kb = name_key(a), name_key(b)
-    if not ka or not kb:
-        return False
-    if ka == kb:
-        return True
-    short, long_ = sorted((ka.split(), kb.split()), key=len)
+def typo_allowance(word: str) -> int:
+    """Length-aware: a word under 5 letters must match exactly (Bolt/Bold), longer ones may carry a typo."""
+    return 0 if len(word) < 5 else 1 if len(word) <= 8 else 2
+
+
+def name_match(a: str, b: str) -> str | None:
+    """Return "exact", "near" or None, comparing the two names word by word."""
+    ta, tb = name_tokens(a), name_tokens(b)
+    if not ta or not tb:
+        return None
+    if ta == tb:
+        return "exact"
+    short, long_ = sorted((ta, tb), key=len)
     if long_[: len(short)] == short:
+        return "near"  # the same name with words added at the end
+    if len(ta) == len(tb):
+        dists = [edit_distance(x, y) for x, y in zip(ta, tb)]
+        if sum(dists) <= 2 and all(d <= typo_allowance(max(x, y, key=len)) for d, x, y in zip(dists, ta, tb)):
+            return "near"
+    return None
+
+
+def near_same_name(a: str, b: str) -> bool:
+    """Name signal strong enough on its own: exact, or near with both names at least SHORT_NAME letters."""
+    m = name_match(a, b)
+    if m == "exact":
         return True
-    return edit_distance(ka, kb) <= 2
+    letters = min(len(name_key(x).replace(" ", "")) for x in (a, b))
+    return m == "near" and letters >= SHORT_NAME
+
+
+def bounced_addresses(summary: str) -> list[str]:
+    """Addresses a delivery-failure notice says failed, best evidence first.
+
+    A Final-Recipient or Original-Recipient line names the failed address; only
+    without one does the first address in the text count (it may be the sender).
+    """
+    text = summary.lower()
+    if not any(p in text for p in BOUNCE_PHRASES):
+        return []
+    named = sorted(RECIPIENT.finditer(summary), key=lambda m: m.group(1).lower() != "final")
+    if named:
+        return list(dict.fromkeys(m.group(2).lower() for m in named))
+    m = EMAIL.search(summary)
+    return [m.group(0).lower()] if m else []
 
 
 def bounced_address(summary: str) -> str | None:
-    text = summary.lower()
-    if not any(p in text for p in BOUNCE_PHRASES):
-        return None
-    m = EMAIL.search(summary)
-    return m.group(0).lower() if m else None
+    found = bounced_addresses(summary)
+    return found[0] if found else None
 
 
-def newest_activity_date(folder: Path) -> date:
-    rows = read_csv(folder / "activity.csv", ("date",))
-    if not rows:
-        raise InputError("activity.csv: the log is empty, so freshness can't be checked")
-    return max(parse_day(r["date"], f"activity.csv line {n}") for n, r in enumerate(rows, start=2))
+def phone_key(value: str) -> str:
+    digits = re.sub(r"\D", "", value)
+    return digits[-9:] if len(digits) >= 7 else ""
 
 
-def check_crm(folder: Path, today: date | None = None) -> list[Finding]:
+def check_crm(folder: Path, today: date | None = None, jobs: list[str] | None = None) -> list[Finding]:
     """Rules A1-F4 from .claude/agents/crm-steward.md, one Finding per (rule, entity)."""
     partners = read_csv(folder / "partners.csv", (
         "partner_id", "name", "status", "priority", "owner", "market",
@@ -242,12 +307,15 @@ def check_crm(folder: Path, today: date | None = None) -> list[Finding]:
     def add(rule: str, entity: str, evidence: str) -> None:
         out.setdefault((rule, entity), Finding(rule, entity, CRM_RULES[rule], evidence))
 
-    # A1 automation health
-    first = min(a["_day"] for a in activity)  # type: ignore[type-var]
-    for job in SCHEDULED:
+    # A1 automation health: each job daily, from its own first line in the log to today
+    job_names = jobs if jobs is not None else sorted({a["source"] for a in activity} - HUMAN_SOURCES)
+    for job in job_names:
         days = {a["_day"] for a in activity if a["source"] == job}
-        d = first
-        while d <= today:
+        if not days:
+            add("A1", job, f"no {job} line in the log at all")
+            continue
+        d = min(days)
+        while d <= today:  # type: ignore[operator]
             if d not in days:
                 add("A1", job, f"no {job} line on {d}")
                 break
@@ -261,6 +329,8 @@ def check_crm(folder: Path, today: date | None = None) -> list[Finding]:
                 add("B3", r[key], f"{label} has {r[key]} more than once")
             seen.add(r[key])
 
+    # Every row is parsed and checked below, a repeated partner_id included: B3 flags the
+    # repeat, but a problem on the second row must not disappear behind it.
     by_id: dict[str, dict[str, str]] = {}
     for n, p in enumerate(partners, start=2):
         where = f"partners.csv line {n} ({p['partner_id']})"
@@ -268,10 +338,13 @@ def check_crm(folder: Path, today: date | None = None) -> list[Finding]:
         p["_next"] = parse_day(p["next_step_date"], f"{where} next_step_date")  # type: ignore[assignment]
         p["_last"] = parse_day(p["last_contact"], f"{where} last_contact")  # type: ignore[assignment]
         by_id.setdefault(p["partner_id"], p)
-    partners = list(by_id.values())
 
     # B1 near-same names or a shared company domain, B2 orphan contacts
     domains: dict[str, set[str]] = {}
+    phones: dict[str, set[str]] = {}
+    for p in partners:
+        if phone_key(p.get("phone", "")):
+            phones.setdefault(p["partner_id"], set()).add(phone_key(p["phone"]))
     for c in contacts:
         if c["partner_id"] not in by_id:
             add("B2", c["contact_id"], f"partner {c['partner_id'] or '(empty)'} doesn't exist")
@@ -279,12 +352,17 @@ def check_crm(folder: Path, today: date | None = None) -> list[Finding]:
         domain = c["email"].rsplit("@", 1)[-1].lower() if "@" in c["email"] else ""
         if domain and domain not in FREE_MAIL:
             domains.setdefault(domain, set()).add(c["partner_id"])
+        if phone_key(c.get("phone", "")):
+            phones.setdefault(c["partner_id"], set()).add(phone_key(c["phone"]))
     pairs: dict[tuple[str, str], str] = {}
     ids = sorted(by_id)
     for i, a_id in enumerate(ids):
         for b_id in ids[i + 1:]:
-            if near_same_name(by_id[a_id]["name"], by_id[b_id]["name"]):
-                pairs[(a_id, b_id)] = f"names {by_id[a_id]['name']!r} / {by_id[b_id]['name']!r}"
+            a_name, b_name = by_id[a_id]["name"], by_id[b_id]["name"]
+            if near_same_name(a_name, b_name):
+                pairs[(a_id, b_id)] = f"names {a_name!r} / {b_name!r}"
+            elif name_match(a_name, b_name) and phones.get(a_id, set()) & phones.get(b_id, set()):
+                pairs[(a_id, b_id)] = f"short near-same names {a_name!r} / {b_name!r} and a shared phone"
     for domain, owners in domains.items():
         owners_sorted = sorted(owners)
         for i, a_id in enumerate(owners_sorted):
@@ -294,10 +372,10 @@ def check_crm(folder: Path, today: date | None = None) -> list[Finding]:
         add("B1", f"{a_id}+{b_id}", why)
 
     emails = [a for a in activity if a["source"] == "email"]
-    bounced = {addr for a in emails if (addr := bounced_address(a["summary"]))}
+    bounced = {addr for a in emails for addr in bounced_addresses(a["summary"])}
     newest_mail: dict[str, date] = {}
     for a in emails:
-        if bounced_address(a["summary"]) is None and a["partner_id"]:
+        if not bounced_addresses(a["summary"]) and a["partner_id"]:
             d = a["_day"]
             if a["partner_id"] not in newest_mail or d > newest_mail[a["partner_id"]]:  # type: ignore[operator]
                 newest_mail[a["partner_id"]] = d  # type: ignore[assignment]
@@ -359,13 +437,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("folder", type=Path)
     ap.add_argument("--today", help="as-of date for crm, YYYY-MM-DD (default: newest date in activity.csv)")
     ap.add_argument("--source-of-truth", help="inventory: file name of the source-of-truth export")
+    ap.add_argument("--jobs", help="crm: comma-separated scheduled job names (default: every non-email source)")
     args = ap.parse_args(argv)
     try:
         if args.pattern == "inventory":
             findings = check_inventory(args.folder, args.source_of_truth)
         else:
             today = parse_day(args.today, "--today") if args.today else None
-            findings = check_crm(args.folder, today)
+            jobs = [j.strip() for j in args.jobs.split(",") if j.strip()] if args.jobs else None
+            findings = check_crm(args.folder, today, jobs)
     except InputError as e:
         print(f"error: {e}", file=sys.stderr)
         return 2

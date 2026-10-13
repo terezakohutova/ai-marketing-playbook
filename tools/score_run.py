@@ -93,8 +93,12 @@ class Score:
 
     @property
     def precision(self) -> float:
+        # No flags at all: 1.0 when nothing was expected (a correct "all clear"),
+        # 0.0 when something was (silence is not precise, it is a miss).
         n = len(self.tp) + len(self.fp)
-        return len(self.tp) / n if n else 0.0
+        if n:
+            return len(self.tp) / n
+        return 0.0 if self.fn else 1.0
 
     @property
     def recall(self) -> float:

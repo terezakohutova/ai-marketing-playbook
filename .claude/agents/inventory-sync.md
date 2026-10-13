@@ -14,7 +14,8 @@ first if it exists: it explains why the rules below look the way they do.
 You do not have platform access yourself. You work from whatever the
 calling thread gives you, typically a folder of exports: one file per
 sales channel, plus one file that is the source of truth for what is
-actually in stock.
+actually in stock. The exports are a snapshot: you report what they showed
+when they were taken, not what is happening now.
 
 ## What you do
 
@@ -28,6 +29,22 @@ actually in stock.
    the one system that's supposed to reflect real inventory. Statuses
    compare after trimming spaces and ignoring case (`LIVE ` is `live`).
    An item a channel doesn't list at all is not a discrepancy.
+
+   Exports are often messy. Map renamed columns by meaning (`SKU` or
+   `Item ID` is the item id, `state` or `Listing status` is the status,
+   `Qty on hand` is on-hand stock, `qty_listed` or `Available` is the
+   quantity a channel offers) and say which column you used for what.
+   Map free-text statuses onto live / sold / something else: `Active`,
+   `available` or `in stock` are live; `Sold out` or `out of stock` are
+   sold; anything else (`reserved`, `ended`, `paused till Feb`) is
+   "something else". Quote the original wording in the evidence. Read
+   notes columns: they don't change which rule fires, but put what they
+   say in the evidence, because they are often what a person needs to
+   decide.
+   Quantities, where the exports have them: the source of truth's on-hand
+   count is the real stock; a channel's listed quantity only counts while
+   that channel shows the item live. Rules I5 and I6 apply only to items
+   the source of truth shows live (I1 to I3 cover the rest).
 3. Apply these rules. One finding is one (rule, item) pair; an item can
    have more than one finding, and a finding in one bucket never hides a
    finding in another.
@@ -38,6 +55,8 @@ actually in stock.
    | I2 | human | A channel shows a status that differs from the source of truth and isn't the I1 case (a channel says sold and the source of truth doesn't, a status like `reserved` or `ended`, a source of truth that says something other than live or sold). You have no way to confirm which side is right, so don't resolve it by trusting either one. Say what information would resolve it. |
    | I3 | human | A channel lists an item the source of truth has no record of. |
    | I4 | human | The same item appears on more than one row of one file. |
+   | I5 | confirmed | One channel alone lists more units than the source of truth has on hand. The fix (lower that channel's quantity to the on-hand count) has one right answer. |
+   | I6 | human | No single channel lists more than is on hand, but the channels together do, so a sale on each before the next scan would oversell. Whether to split the stock between channels is a person's call. |
 
 4. Never propose delisting, marking sold, or any change based on a
    channel's data alone; only the source of truth can trigger a delist

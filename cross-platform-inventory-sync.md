@@ -1,6 +1,6 @@
 # Cross-platform inventory sync
 
-**Solves:** noticing that something sold on one sales channel before it oversells (or gets refunded and apologized for) on another.
+**Solves:** noticing, at each scan, that something sold on one sales channel (or that more units are listed than are in stock) before it oversells, or gets refunded and apologized for, on another. It works from snapshots, so it is as fresh as the last scan, not real time.
 
 ## The problem
 
@@ -28,4 +28,4 @@ Selling the same one-of-a-kind or limited-stock items across multiple marketplac
 
 An agent with read access to each platform (browser automation is enough), one system treated as ground truth for current stock, and a proposal-queue file or ticket the human clears in a single daily pass rather than being interrupted per discrepancy.
 
-A working reference agent is in [`.claude/agents/inventory-sync.md`](.claude/agents/inventory-sync.md). It has three sample datasets in [`examples/inventory/`](examples/inventory/), including cases where trusting a marketplace's "sold" would be wrong, a hand-written answer key for each in [`tests/answer_keys/`](tests/answer_keys/), and one unedited blind run per dataset in [`examples/runs/`](examples/runs/), scored in the [README](README.md#results).
+A working reference agent is in [`.claude/agents/inventory-sync.md`](.claude/agents/inventory-sync.md). It has four sample datasets in [`examples/inventory/`](examples/inventory/), including cases where trusting a marketplace's "sold" would be wrong and a messy one with renamed columns, free-text statuses and multi-unit quantities, a hand-written answer key for each in [`tests/answer_keys/`](tests/answer_keys/), and one unedited blind run per dataset in [`examples/runs/`](examples/runs/), scored in the [README](README.md#results).

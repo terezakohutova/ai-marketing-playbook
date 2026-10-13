@@ -1,0 +1,9 @@
+listing_ref,sku,qty_listed,state,last_updated
+A-9001,SK-101,4,live,18.11.2026
+A-9002,SK-102,1,live,Nov 17 2026
+A-9003,SK-103,3,live,2026-11-19
+A-9004,SK-104,1,live,2026-11-19
+A-9005,SK-105,6,live,19.11.2026
+A-9006,SK-106,1,live,Nov 12 2026
+A-9007,SK-107,2,paused till Feb,2026-11-02
+A-9008,SK-109,1,live,2026-11-18

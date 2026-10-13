@@ -1,0 +1,80 @@
+{
+  "cooldown_days": 14,
+  "exclude": [
+    "facebook-group:home-goods-swap"
+  ],
+  "drafts": [
+    {
+      "id": "D01",
+      "contact": "lena@nordwindtea.example",
+      "destination": "email",
+      "body": "Hi Lena, we just restocked the beeswax candle sets you asked about. Happy to hold two for your shop until Friday.",
+      "staged_at": "2026-11-02T08:10:00",
+      "approved_by": "Mia",
+      "approved_at": "2026-11-02T09:00:00",
+      "approved_sha256": "4e817ae44cc03a91b9ac17134ac399db6e78f35522ebc968ee8a91332506e973",
+      "sent_at": "2026-11-02T09:05:00",
+      "sent_by": "Mia"
+    },
+    {
+      "id": "D02",
+      "contact": "sam@kettleandcrumb.example",
+      "destination": "email",
+      "body": "Hello Kettle & Crumb team, our winter bundle is ready. Would a short call next week work to look at it together?",
+      "staged_at": "2026-11-02T08:12:00",
+      "approved_by": "",
+      "approved_at": "",
+      "approved_sha256": "",
+      "sent_at": "2026-11-02T10:00:00",
+      "sent_by": "agent"
+    },
+    {
+      "id": "D03",
+      "contact": "ola@fjordoutdoor.example",
+      "destination": "email",
+      "body": "Hi Ola, thanks for the extension request. Mid-January works for us; I'll send the revised terms on the 10th.",
+      "staged_at": "2026-11-17T08:00:00",
+      "approved_by": "Jonas",
+      "approved_at": "2026-11-17T09:00:00",
+      "approved_sha256": "91560dc53fc9f954580370b0aad152f449936e2fe45c174d203ad896fb4ad83d",
+      "sent_at": "2026-11-17T09:30:00",
+      "sent_by": "Jonas"
+    },
+    {
+      "id": "D04",
+      "contact": "lena@nordwindtea.example",
+      "destination": "email",
+      "body": "Hi Lena, one more thing on the candle sets: we can add gift wrap at no extra cost.",
+      "staged_at": "2026-11-10T08:00:00",
+      "approved_by": "Mia",
+      "approved_at": "2026-11-10T08:30:00",
+      "approved_sha256": "d89c605b52235e1f2541a25e1d493bd6f63577d6d46efdc8f54c244063ba4752",
+      "sent_at": "2026-11-10T08:45:00",
+      "sent_by": "Mia"
+    },
+    {
+      "id": "D05",
+      "contact": "erik@boldbikes.example",
+      "destination": "email",
+      "body": "Hi Erik, quick reminder that our monthly check-in is on Thursday.",
+      "staged_at": "2026-11-18T08:00:00",
+      "approved_by": "",
+      "approved_at": "",
+      "approved_sha256": "",
+      "sent_at": "",
+      "sent_by": ""
+    },
+    {
+      "id": "D06",
+      "contact": "admins@home-goods-swap.example",
+      "destination": "facebook-group:home-goods-swap",
+      "body": "Hello! We make small-batch home goods and would love to be featured in your group.",
+      "staged_at": "2026-11-18T08:05:00",
+      "approved_by": "",
+      "approved_at": "",
+      "approved_sha256": "",
+      "sent_at": "",
+      "sent_by": ""
+    }
+  ]
+}

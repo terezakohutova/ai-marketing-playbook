@@ -14,7 +14,14 @@ exists: it explains why the rules below look the way they do.
 You don't have database access yourself. You work from a folder of
 exports, typically `partners.csv`, `contacts.csv` and `activity.csv` (a log
 of e-mails and automation runs). Read every file before starting and work
-from the actual columns. Take "today" from the folder's README if it
+from the actual columns. Exports are often messy: map renamed or extra
+columns by meaning (say which column you used for what), read dates in any
+unambiguous format (`14.1.2027`, `Jan 14 2027`, `2027-01-14`), map
+free-text statuses onto the five statuses below (`live-ish (soft launch)`
+is Live, `paused till Feb` is Paused) and quote the original, and treat a
+log line as an e-mail when it is one, whatever the channel is called
+(`email`, `E-mail (inbound)`). Read note and summary text: it is often
+where the real signal is. Take "today" from the folder's README if it
 states an as-of date, otherwise from the newest date in `activity.csv`,
 and say which one you used.
 
@@ -32,19 +39,25 @@ and say which one you used.
 
 - **Open partner:** status Prospect, Negotiation or Live. Closed: Paused,
   Lost. Statuses compare case-insensitively.
-- **Bounce:** an `email` line in the activity log whose summary contains an
-  e-mail address and a delivery-failure phrase ("delivery failure",
-  "delivery status notification (failure)", "mail delivery failed",
-  "undeliverable", "address not found", "user unknown", "mailbox does not
-  exist", "recipient address rejected"). Addresses compare
-  case-insensitively. A bounce is not contact with the partner; any other
-  `email` line is.
+- **Bounce:** an e-mail line in the activity log that is a delivery-failure
+  notice, for example containing "delivery failure", "mail delivery
+  failed", "undeliverable", "returned mail", "address not found", "user
+  unknown", "no such user", "mailbox does not exist" or "recipient address
+  rejected". The bounced address is the one on a `Final-Recipient` or
+  `Original-Recipient` line if there is one, otherwise the address the
+  notice says failed; not just the first address in the text, which is
+  often the postmaster. Addresses compare case-insensitively. A bounce is
+  not contact with the partner; any other e-mail line is.
 - **Effective last contact:** the later of `last_contact` and the partner's
   newest non-bounce e-mail in the log.
 - **Near-same name:** lowercase both names, drop punctuation, "&", "and",
-  and the words co, company, inc, ltd, llc, gmbh, the. They are near-same if
-  the results are equal, one is the other with words added at the end, or
-  they differ by at most two characters (a typo).
+  the words co, company, inc, ltd, llc, gmbh, the, and a plain plural -s.
+  They are near-same if the results are equal, one is the other with words
+  added at the end, or they differ word by word by a typo: none in a word
+  under 5 letters, one in a word of 5 to 8, two in a longer word, at most
+  two in total. "Bolt Bikes" and "Bold Bikes" are different companies.
+  If the shorter name has under 6 letters (Lumo, Nova), a near match that
+  isn't exact also needs a shared phone number or company domain.
 - **Free-mail domains** (gmail.com, googlemail.com, outlook.com,
   hotmail.com, live.com, yahoo.com, icloud.com, aol.com, proton.me,
   protonmail.com, gmx.de, gmx.net, web.de) say nothing about the company and
@@ -58,8 +71,8 @@ correct answer).
 
 | Rule | Entity | Bucket | Fires when |
 |---|---|---|---|
-| A1 | job name | person | A scheduled job (`nightly-sync`, `morning-digest`) has no log line on some day between the oldest date in the log and today. A gap means everything below is computed on stale data: say so at the top. |
-| B1 | `Pxx+Pyy` (lower id first) | person | Two partners have near-same names, or their contacts share a non-free-mail domain. |
+| A1 | job name | person | A scheduled job (any log source that is an automation rather than an e-mail, such as `nightly-sync` or `morning-digest`) has no log line on some day between its own first line in the log and today. A job that started later is not missing before it existed. A gap means everything below is computed on stale data: say so at the top. |
+| B1 | `Pxx+Pyy` (lower id first) | person | Two partners have near-same names (see above), or their contacts share a non-free-mail domain. |
 | B2 | contact id | person | A contact points at a partner id that doesn't exist. |
 | B3 | the repeated id | person | The same `partner_id` or `contact_id` appears on more than one row. |
 | C1 | partner id | person | Status Paused or Lost with `live_offers` above 0. |

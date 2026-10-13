@@ -29,3 +29,5 @@ jobs:
       - run: python -m unittest discover -s tests -v
       # Prints precision and recall per run and per rule into the job log.
       - run: python tools/score_run.py --all --per-rule
+      # Lists every finding where a hand-written key and the checker disagree.
+      - run: python tools/key_vs_checker.py

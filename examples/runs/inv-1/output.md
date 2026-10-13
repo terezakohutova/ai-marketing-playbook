@@ -1,21 +1,22 @@
-## Inventory sync proposal queue
+The pattern file `cross-platform-inventory-sync.md` isn't in the project folder, so I worked from the rules in my instructions alone.
 
-Source of truth: `storefront.csv`. Compared against `marketplace-a.csv` and `marketplace-b.csv`. Statuses were trimmed and compared case-insensitively.
+**Files and columns:** `export/storefront.csv` is the source of truth. `export/marketplace-a.csv` and `export/marketplace-b.csv` are the two channels. In all three files I used `item_id` as the item id and `status` as the status. None of the files has quantity or notes columns, so I did not check I5 or I6.
 
-- **I1, confirmed, ITM-014 (Brass table lamp):** storefront says `sold`, marketplace-a says `live` and marketplace-b says `live`. Proposal: delist on both marketplaces.
-- **I1, confirmed, ITM-040 (Walnut side table):** storefront says `sold`, marketplace-a says `sold`, marketplace-b says `live`. Proposal: delist on marketplace-b.
-- **I1, confirmed, ITM-058 (Pine step stool):** storefront says `Sold`, marketplace-a says `LIVE ` (live after trimming and ignoring case), marketplace-b says `sold`. Proposal: delist on marketplace-a.
-- **I2, human, ITM-022 (Ceramic vase set):** storefront says `live`, marketplace-a says `live`, marketplace-b says `sold`. Needs the sales record or order, or a physical check, to show whether it sold on marketplace-b. If it did, the storefront and marketplace-a are stale.
-- **I2, human, ITM-043 (Linen cushion pair):** storefront says `live`, marketplace-a says `reserved`, marketplace-b says `live`. Needs the marketplace-a reservation details (buyer, expiry) to show whether a hold is genuine or stale.
-- **I2, human, ITM-055 (Rattan armchair):** storefront says `live`, marketplace-a says `sold`, marketplace-b says `sold`. Both marketplaces say sold and the storefront does not. Needs the order or payment records, or a physical stock check. Neither side is trusted here.
-- **I3, human, ITM-052 (Glass pendant light):** marketplace-a lists it as `live`. The storefront has no record of it, and marketplace-b does not list it. Needs confirmation of whether the item exists in stock and was left out of the storefront, or whether the listing is orphaned.
+**Proposal queue**
 
-I4 (the same item on more than one row of a file) did not fire in any file.
+| Rule | Bucket | Item | Evidence |
+|---|---|---|---|
+| I1 | confirmed | ITM-014 | The storefront says `sold`. Marketplace A says `live` and Marketplace B says `live`. |
+| I1 | confirmed | ITM-040 | The storefront says `sold`. Marketplace B says `live`. Marketplace A says `sold`. |
+| I1 | confirmed | ITM-058 | The storefront says `Sold`. Marketplace A says `LIVE ` (live after trimming). Marketplace B says `sold`. |
+| I2 | human | ITM-022 | The storefront says `live`. Marketplace B says `sold`. Marketplace A says `live`. Someone needs to check the actual stock or order records for this item to see whether B recorded a real sale the storefront missed or B is wrong. |
+| I2 | human | ITM-043 | The storefront says `live`. Marketplace A says `reserved`. Marketplace B says `live`. Someone needs to check A for an open order or hold on this item and see whether it is still pending. |
+| I2 | human | ITM-055 | The storefront says `live`. Marketplace A says `sold` and Marketplace B says `sold`. Both channels disagree with the storefront, so someone needs to check order records to see whether it really sold or the storefront count is stale. |
+| I3 | human | ITM-052 | Marketplace A lists "Glass pendant light" as `live`. The storefront has no record of it. Someone needs to find out whether the item exists and is missing from the storefront export. |
 
-Clean: 4 items (ITM-031, ITM-035, ITM-061, ITM-063) agree with the source of truth on every channel that lists them.
+Four of the ten storefront items (ITM-031, ITM-035, ITM-061, ITM-063) were clean: every channel that lists them agrees with the storefront.
 
-### What I did NOT do
-I made no changes. This was a read-only pass, and nothing was delisted, marked sold or edited. All of the above are proposals for a human to approve.
+**What I did not do:** I made no changes. This was a read-only pass over the exports, so I did not delist or mark anything sold on any channel. These findings reflect the snapshot when the exports were taken, not the current state.
 
 ```findings
 [

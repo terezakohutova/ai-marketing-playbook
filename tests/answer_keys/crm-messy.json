@@ -1,0 +1,145 @@
+{
+  "dataset": "crm-messy",
+  "pattern": "crm",
+  "folder": "examples/crm/crm-messy",
+  "today": "2026-11-20",
+  "written": "by hand, before any agent run on this data and before the checker was pointed at it",
+  "findings": [
+    {
+      "rule": "A1",
+      "entity": "nightly-sync",
+      "bucket": "person",
+      "why": "dates in three formats; no nightly-sync line on 2026-11-18 (Nov 18 2026 has only the digest)"
+    },
+    {
+      "rule": "B1",
+      "entity": "P02+P07",
+      "bucket": "person",
+      "why": "'Kettle & Crumb' / 'Kettle and Crumb Ltd.', and both have contacts at kettleandcrumb.example"
+    },
+    {
+      "rule": "C1",
+      "entity": "P03",
+      "bucket": "person",
+      "why": "stage 'Paused till Feb' is Paused, active_offers 1"
+    },
+    {
+      "rule": "C2",
+      "entity": "P08",
+      "bucket": "person",
+      "why": "Live, active_offers 0"
+    },
+    {
+      "rule": "C3",
+      "entity": "P01",
+      "bucket": "safe",
+      "why": "e-mail 2026-11-19, last_touch 12.11.2026"
+    },
+    {
+      "rule": "C3",
+      "entity": "P04",
+      "bucket": "safe",
+      "why": "e-mail logged under channel 'E-mail (inbound)' on 17.11.2026 (Ola asked for an extension), last_touch 2026-10-30"
+    },
+    {
+      "rule": "D1",
+      "entity": "P10",
+      "bucket": "person",
+      "why": "prospect with no next action and no due date"
+    },
+    {
+      "rule": "D2",
+      "entity": "P02",
+      "bucket": "person",
+      "why": "due 'Nov 10 2026', before today"
+    },
+    {
+      "rule": "D3",
+      "entity": "P05",
+      "bucket": "person",
+      "why": "LOST with a next action"
+    },
+    {
+      "rule": "D4",
+      "entity": "P09",
+      "bucket": "person",
+      "why": "priority B, last touch 2026-10-15 = 36 days; the 16 Nov line is a bounce, not contact"
+    },
+    {
+      "rule": "D5",
+      "entity": "P02",
+      "bucket": "person",
+      "why": "'live-ish (soft launch)' is Live, priority B, last touch 2026-10-28 = 23 days, above 22.5"
+    },
+    {
+      "rule": "E1",
+      "entity": "C09",
+      "bucket": "safe",
+      "why": "returned mail with Final-Recipient jo@wrenwillow.example ('no such user'), contact still Active; the first address in the text is the postmaster"
+    },
+    {
+      "rule": "E2",
+      "entity": "P10",
+      "bucket": "person",
+      "why": "contacts are 'to verify' and 'former' only"
+    },
+    {
+      "rule": "E2",
+      "entity": "P05",
+      "bucket": "person",
+      "why": "only a Former contact; E2 applies to every partner, Lost ones too (as P06 in crm-1)"
+    },
+    {
+      "rule": "F1",
+      "entity": "P06",
+      "bucket": "person",
+      "why": "open, no priority"
+    },
+    {
+      "rule": "F3",
+      "entity": "P07",
+      "bucket": "person",
+      "why": "open, no owner"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "A1",
+      "entity": "morning-digest",
+      "why": "new job, first line Nov 16 2026, daily since"
+    },
+    {
+      "rule": "B1",
+      "entity": "P06+P08",
+      "why": "'Bolt Bikes' / 'Bold Bikes': different short brand words, different domains and phones"
+    },
+    {
+      "rule": "D4",
+      "entity": "P04",
+      "why": "last_touch alone is 21 days old, but the 17.11.2026 e-mail is contact: 3 days"
+    },
+    {
+      "rule": "C3",
+      "entity": "P09",
+      "why": "the only P09 e-mail is a bounce"
+    },
+    {
+      "rule": "D1",
+      "entity": "P03",
+      "why": "paused partners are not open"
+    },
+    {
+      "rule": "D2",
+      "entity": "P04",
+      "why": "due 14.1.2027 is in the future"
+    },
+    {
+      "rule": "E1",
+      "entity": "C10",
+      "why": "kim@wrenwillow.example did not bounce"
+    }
+  ],
+  "revisions": [
+    "After the blind run, tools/key_vs_checker.py on header- and date-repaired data showed the checker flagging E2 P05, which the hand-written key had missed. The rule text has no open-partner condition, so the key was wrong and E2 P05 was added. The blind run missed it as well; it is scored as a miss."
+  ]
+}

@@ -1,0 +1,13 @@
+contact_id,partner,full_name,e-mail,phone,state
+C01,P01,Lena Brook,lena@nordwindtea.example,+49 30 5550 1201,Active
+C02,P02,Sam Crumb,sam@kettleandcrumb.example,+44 20 7946 0102,Active
+C03,P07,Alex Pike,alex@kettleandcrumb.example,+44 20 7946 0177,active
+C04,P03,Priya Lumo,priya@lumolighting.example,+49 40 5550 3304,Active
+C05,P04,Ola Berg,ola@fjordoutdoor.example,+47 22 55 50 05,Active
+C06,P05,Grace Lowe,grace@saltwicksoap.example,,Former
+C07,P06,Tom Hale,tom@boltbikes.example,+49 89 5550 6607,Active
+C08,P08,Erik Lund,erik@boldbikes.example,+49 89 5550 8808,Active
+C09,P09,Jo Wren,jo@wrenwillow.example,+44 161 496 0909,Active
+C10,P09,Kim Willow,kim@wrenwillow.example,+44 161 496 0910,Active
+C11,P10,Nora Finch,nora@copperline.example,,to verify
+C12,P10,Ben Ash,ben.ash@gmail.com,,former

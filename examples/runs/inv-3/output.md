@@ -1,17 +1,18 @@
-Source of truth: `inventory.csv` (the inventory system export). Channels compared: `auction-site.csv`, `shop-north.csv`, `shop-south.csv`. Statuses were compared after trimming spaces and ignoring case.
+**Proposal queue** (read-only pass)
 
-## Proposal queue
+Source of truth: `export/inventory.csv`. It is the only file with no channel role, and the others are two shops and an auction site. Columns used: `item_id` is the item id and `status` is the listing status. None of the files has quantity columns, so rules I5 and I6 could not be checked. I did not find `cross-platform-inventory-sync.md` in the folder, so I worked from my instructions alone.
 
-- **I1 / confirmed / BK-201** (First edition field guide): inventory says `sold`, but auction-site says `live`, shop-north says `live` and shop-south says `live`. All three channels are stale. Proposed for delisting on all three, pending approval.
-- **I1 / confirmed / BK-208** (Map of the old town): inventory says `sold`. shop-north still says `live`. auction-site doesn't list it, and shop-south says `sold`, which agrees. shop-north is stale. Proposed for delisting there, pending approval.
-- **I2 / human / BK-203** (Signed poetry chapbook): inventory says `live`, auction-site says `ended`. shop-north and shop-south don't list it. I can't tell whether the auction ended without a sale (so it could be relisted) or the inventory record is out of date. To resolve it, check the auction's end reason (unsold or sold) and confirm the physical copy is still in stock.
-- **I3 / human / BK-205** (Annotated garden diary): shop-south lists it as `live`, but inventory has no record of it. To resolve it, check whether it is a missing inventory entry (a stock item never logged) or a stray or mistaken listing.
-- **I4 / human / BK-202** (Atlas of rivers): shop-north has two rows for it, both `live`. Inventory says `live`, so the status is consistent. The duplicate may be a double listing or an export artifact. To resolve it, check shop-north's admin for one listing or two, and whether there is one copy or two in stock.
+| Rule | Bucket | Item | Evidence |
+|---|---|---|---|
+| I1 | confirmed | BK-201 | Inventory says `sold`. auction-site says `live`, shop-north says `live` and shop-south says `live`. All three channels are stale. |
+| I1 | confirmed | BK-208 | Inventory says `sold`. shop-north says `live`. shop-south says `sold`, which agrees. |
+| I2 | human | BK-203 | Inventory says `live`. auction-site says `ended`. I can't tell which side is right. A person would need to check the auction site's end reason, for example whether the auction closed unsold or was cancelled, and whether the physical copy is still in stock. |
+| I3 | human | BK-205 | shop-south lists "Annotated garden diary" as `live`. Inventory has no record of it. A person would need to confirm whether the item exists, for example by checking stock or a missing inventory entry. |
+| I4 | human | BK-202 | shop-north has two identical rows, both `live`. Inventory also says `live`. A person would need to confirm whether these are one listing duplicated in the export or two separate listings. |
 
-Clean: 4 items (BK-204, BK-206, BK-207, BK-209) had every listing matching inventory. BK-207 matched after normalising `SOLD` and ` sold`. BK-202 matches on status but is flagged under I4 above.
+Four items were clean, with every channel that lists them matching inventory: BK-204, BK-206, BK-207 and BK-209. BK-207 matches once the inventory's `SOLD` and shop-south's ` sold` are trimmed and lowercased. BK-209 appears on three channels and all show `live`.
 
-## What I did not do
-I made no changes. This was a read-only pass, and nothing was delisted, relisted or edited. All items above are proposals for a human to approve.
+**What I did NOT do:** I made no changes and this was a read-only pass. I did not delist or mark anything sold on any channel. The I1 items are proposals for the queue only. The statuses are a snapshot from when the exports were taken.
 
 ```findings
 [

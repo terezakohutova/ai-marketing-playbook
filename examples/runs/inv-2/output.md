@@ -1,28 +1,27 @@
-## Inventory sync proposal queue
+**Proposal queue** (read-only pass over `export/storefront.csv`, `marketplace-a.csv` and `marketplace-b.csv`)
 
-Source of truth: `storefront.csv` (the storefront export). Compared against `marketplace-a.csv` and `marketplace-b.csv`. Statuses were trimmed and compared case-insensitively.
+I treated `storefront.csv` as the source of truth because it is the storefront export. All three files use `item_id`, `title` and `status`, so no columns needed remapping. None of them has quantity columns, so I did not apply the quantity rules I5 and I6. I also couldn't find `cross-platform-inventory-sync.md` in the project. I worked from the rules in my instructions alone.
 
-### Findings
+| Rule | Bucket | Item | Evidence |
+|---|---|---|---|
+| I1 | confirmed | PRT-101 | The storefront says `sold`. Marketplace A still shows `live`. |
+| I2 | human | PRT-101 | The storefront says `sold`. Marketplace B shows `reserved`. This could be a pending order or a stale hold. To resolve it, check B's reservation or order record and whether a sale was actually completed. |
+| I1 | confirmed | PRT-110 | The storefront says `sold`. Marketplace B still shows `live`. |
+| I2 | human | PRT-105 | The storefront says `reserved`. Marketplace A and Marketplace B both show `live`. To resolve it, check who holds the reservation and whether it is still active. The storefront's own record of the reservation would show this. |
+| I2 | human | PRT-107 | The storefront says `live`. Marketplace A says `sold`. To resolve it, check Marketplace A's order record for a sale. If a sale exists, the storefront stock count is wrong. If not, A's status is wrong. |
+| I3 | human | PRT-108 | Marketplace A lists it as `sold`. The storefront has no record of the item. To resolve it, check whether the item was ever in inventory or was removed from the storefront export. |
 
-- **I1, confirmed, PRT-101** (Harbour at dusk). The storefront says `sold`. marketplace-a still shows `live`. The listing is stale, so proposal: delist it on marketplace-a.
-- **I1, confirmed, PRT-110** (Salt flats panorama). The storefront says `sold`. marketplace-b still shows `live`. The listing is stale, so proposal: delist it on marketplace-b.
-- **I2, human, PRT-101.** marketplace-b shows `reserved` while the storefront says `sold`. This is a separate finding from the I1 one above. To resolve it, check whether a buyer actually has a reservation on marketplace-b or the reservation is a leftover. Check the sale record (order and date) against the reservation.
-- **I2, human, PRT-105** (Night market poster). The storefront says `reserved`. marketplace-a and marketplace-b both show `live`. I can't tell whether the reservation is real. To resolve it, check who holds the reservation and whether it is still valid. If it is valid, both channels should be paused. If it has lapsed, the storefront is the stale side.
-- **I2, human, PRT-107** (Kestrel in flight). The storefront says `live`, but marketplace-a says `sold`. A channel claims a sale the source of truth doesn't know about. To resolve it, check marketplace-a's order records for a real sale. If there is one, the storefront needs updating. If not, the marketplace status is wrong.
-- **I3, human, PRT-108** (Moth wing study). marketplace-a lists it as `sold`, but the storefront has no record of the item. To resolve it, find out whether the item was ever stocked and whether it is a missing storefront record or a stray marketplace listing.
-- **I4:** none. No item appears on more than one row of any file.
+I1 is a rule match on the storefront's own status, not an instruction to act. Any delist for PRT-101 or PRT-110 still goes through the queue.
 
-Clean: 5 items (PRT-102, PRT-103, PRT-104, PRT-106, PRT-109) match the source of truth on every channel that lists them.
+Five items had every listing agreeing with the storefront: PRT-102, 103, 104, 106 and 109. Case and spacing differences such as `Live` and `LIVE` count as matching. PRT-104 and PRT-110 are not listed on Marketplace A, and PRT-102, PRT-107 and PRT-108 are not listed on Marketplace B. I did not count those gaps as discrepancies. I found no duplicate rows in any file, so I4 did not fire.
 
-### What I did not do
-
-I made no changes. This is a read-only pass, and nothing was delisted, marked sold or edited. The delist proposals for PRT-101 and PRT-110 are queue entries that need someone's approval before action.
+**What I did not do:** I made no changes to any channel or to the source of truth. I did not delist, mark anything sold, or resolve any human-bucket item by trusting one side. This is a snapshot of the exports as they were taken.
 
 ```findings
 [
   {"rule": "I1", "entity": "PRT-101", "bucket": "confirmed"},
-  {"rule": "I1", "entity": "PRT-110", "bucket": "confirmed"},
   {"rule": "I2", "entity": "PRT-101", "bucket": "human"},
+  {"rule": "I1", "entity": "PRT-110", "bucket": "confirmed"},
   {"rule": "I2", "entity": "PRT-105", "bucket": "human"},
   {"rule": "I2", "entity": "PRT-107", "bucket": "human"},
   {"rule": "I3", "entity": "PRT-108", "bucket": "human"}

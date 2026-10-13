@@ -1,0 +1,48 @@
+{
+  "dataset": "inv-messy",
+  "date": "2026-10-14",
+  "runner": "tools/blind_run.py: a fresh, non-interactive Claude Code session (claude -p), one run, no retries",
+  "model": "sonnet",
+  "command": "claude -p <prompt> --model sonnet --tools Read,Grep,Glob --safe-mode --strict-mcp-config --no-session-persistence --effort medium --system-prompt <body of agent.md>",
+  "system_prompt": "the body of agent.md after its frontmatter, nothing else",
+  "prompt": "Do the task your instructions describe on the exports in the folder export/ in the current directory. Read only files inside the current directory. Your final answer is saved verbatim as your output, so make it your complete output, exactly as you would present it to the person who asked.",
+  "tools_available": [
+    "Read",
+    "Grep",
+    "Glob"
+  ],
+  "read_only": "enforced by the CLI: --tools leaves the session only these tools, so it cannot write, edit or run anything; the harness saves the final answer as output.md",
+  "context": "--safe-mode: no CLAUDE.md, skills, plugins, hooks or MCP servers. Claude Code still adds its own environment block (working directory, platform, date, account e-mail).",
+  "run_dir": "<run-dir>, an empty folder outside this repo holding only the files below",
+  "files_given": [
+    {
+      "path": "agent.md",
+      "copy_of": ".claude/agents/inventory-sync.md",
+      "sha256": "10e670f5a25be2474abf5fbef152558a3638e7da8a696e56fa65fe6004150195"
+    },
+    {
+      "path": "export/marketplace-a.csv",
+      "copy_of": "examples/inventory/inv-messy/marketplace-a.csv",
+      "sha256": "185b4edbb40931fbae5962ef9211c6a905079380eaf05ac2c4bbe92ee8ad79d5"
+    },
+    {
+      "path": "export/marketplace-b.csv",
+      "copy_of": "examples/inventory/inv-messy/marketplace-b.csv",
+      "sha256": "04298225abb128e48b0e51a86ca9ae3cadcdb8333ce6940ee7cf90007aac6232"
+    },
+    {
+      "path": "export/stock-master.csv",
+      "copy_of": "examples/inventory/inv-messy/stock-master.csv",
+      "sha256": "a31d1aaa8434f793aab518518642cf50727068d10918fa541e6a7c8388eb050d"
+    }
+  ],
+  "not_given": [
+    "the pattern doc",
+    "dataset README",
+    "answer keys",
+    "earlier outputs",
+    "the checker"
+  ],
+  "output": "output.md: the session's final answer, line endings normalised to LF, otherwise unedited",
+  "output_sha256": "ba5146f584d85232b8b7360a9bdb824c7d6dcf78244839027f4e4036e6ae275b"
+}

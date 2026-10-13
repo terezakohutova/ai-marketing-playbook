@@ -1,0 +1,90 @@
+{
+  "dataset": "inv-messy",
+  "pattern": "inventory",
+  "folder": "examples/inventory/inv-messy",
+  "source_of_truth": "stock-master.csv",
+  "written": "by hand, before any agent run on this data and before the checker was pointed at it",
+  "findings": [
+    {
+      "rule": "I1",
+      "entity": "SK-102",
+      "bucket": "confirmed",
+      "why": "stock-master 'Sold out' (0 on hand), marketplace-a live"
+    },
+    {
+      "rule": "I2",
+      "entity": "SK-104",
+      "bucket": "human",
+      "why": "marketplace-b 'Sold' (note: buyer asked for an extension on payment), stock-master Active with 1 on hand"
+    },
+    {
+      "rule": "I2",
+      "entity": "SK-106",
+      "bucket": "human",
+      "why": "stock-master 'Reserved - pickup Fri', marketplace-a live"
+    },
+    {
+      "rule": "I2",
+      "entity": "SK-107",
+      "bucket": "human",
+      "why": "marketplace-a 'paused till Feb', stock-master Active"
+    },
+    {
+      "rule": "I3",
+      "entity": "SK-109",
+      "bucket": "human",
+      "why": "listed on marketplace-a, not in stock-master"
+    },
+    {
+      "rule": "I4",
+      "entity": "SK-108",
+      "bucket": "human",
+      "why": "two marketplace-b rows"
+    },
+    {
+      "rule": "I5",
+      "entity": "SK-103",
+      "bucket": "confirmed",
+      "why": "2 on hand, marketplace-a lists 3"
+    },
+    {
+      "rule": "I6",
+      "entity": "SK-101",
+      "bucket": "human",
+      "why": "4 on hand, channels list 4 + 3 = 7"
+    },
+    {
+      "rule": "I6",
+      "entity": "SK-105",
+      "bucket": "human",
+      "why": "10 on hand, channels list 6 + 5 = 11"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "I1",
+      "entity": "SK-104",
+      "why": "a channel saying sold while the source of truth has stock is I2, not I1"
+    },
+    {
+      "rule": "I5",
+      "entity": "SK-101",
+      "why": "marketplace-a lists 4 of 4 on hand"
+    },
+    {
+      "rule": "I6",
+      "entity": "SK-103",
+      "why": "already I5: one channel alone lists more than on hand"
+    },
+    {
+      "rule": "I6",
+      "entity": "SK-107",
+      "why": "2 (paused) + 1 = 3 of 3 on hand"
+    },
+    {
+      "rule": "I2",
+      "entity": "SK-101",
+      "why": "'Active' and 'live' mean the same"
+    }
+  ]
+}

@@ -7,9 +7,11 @@ The folder holds `schedule.json` (which jobs exist, how often they run, what
 each may write) and `run-log.csv` (one line per run, write, message, ...).
 Rules, one finding per (rule, entity):
 
-  S1 missed run      a daily job with no `run` line on some day from the oldest
-                     log date to today, or a weekly job with more than 7 days
-                     between runs or since its last run          entity: job
+  S1 missed run      a daily job with no `run` line on some day from its own
+                     first line in the log to today (a job added later is not
+                     "missing" before it existed), a job in schedule.json with no
+                     run at all, or a weekly job with more than 7 days between
+                     runs or since its last run                  entity: job
   S2 forbidden write a `write` to a table.field not on the job's may_write list
                                                                  entity: job/table.field
   S3 create/delete   a scheduled job created or deleted a record entity: job/table
@@ -78,13 +80,16 @@ def load(folder: Path) -> tuple[dict, list[dict[str, str]]]:
 def check(folder: Path, today: date | None = None) -> list[tuple[str, str, str]]:
     jobs, rows = load(folder)
     today = today or max(r["_day"] for r in rows)  # type: ignore[type-var]
-    first = min(r["_day"] for r in rows)  # type: ignore[type-var]
     out: dict[tuple[str, str], str] = {}
 
     for name, job in jobs.items():
         runs = sorted({r["_day"] for r in rows if r["job"] == name and r["action"] == "run"})
         if job["every"] == "day":
-            d = first
+            own = [r["_day"] for r in rows if r["job"] == name]
+            if not runs:
+                out.setdefault(("S1", name), "no run in the log at all")
+                continue
+            d = min(own)
             while d <= today:  # type: ignore[operator]
                 if d not in runs:
                     out.setdefault(("S1", name), f"no run on {d}")

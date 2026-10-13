@@ -1,0 +1,11 @@
+id,company,stage,prio,account_owner,country,next_action,due,last_touch,active_offers,notes
+P01,Nordwind Tea,Live,A,Mia,DE,Send Q1 plan,2026-12-05,12.11.2026,2,
+P02,Kettle & Crumb,live-ish (soft launch),B,Jonas,UK,Check soft-launch numbers,Nov 10 2026,2026-10-28,1,Soft launch on their site only; full launch not agreed yet
+P03,Lumo Lighting,Paused till Feb,B,Mia,DE,,,2026-09-30,1,Paused until their February relaunch
+P04,Fjord Outdoor,Negotiation,A,Jonas,NO,Send revised terms,14.1.2027,2026-10-30,0,
+P05,Saltwick Soap,LOST,C,Mia,UK,Send samples again,2026-12-01,2026-08-14,0,Went with another reseller
+P06,Bolt Bikes,Prospect,,Mia,DE,Intro call,Jan 14 2027,2026-11-02,0,
+P07,Kettle and Crumb Ltd.,Prospect,C,,UK,Pitch winter bundle,2026-12-03,2026-11-05,0,
+P08,Bold Bikes,Live,B,Jonas,DE,Monthly check-in,2026-11-27,2026-11-11,0,
+P09,Wren & Willow,Negotiation,B,Mia,UK,Send contract,2026-11-25,2026-10-15,0,
+P10,Copperline,prospect,A,Jonas,DE,,,2026-11-18,0,Met at the trade fair
