@@ -12,8 +12,11 @@ Not prompts. Not theory. Each pattern below is a workflow that has processed rea
 | [Photo-to-multichannel listing](photo-to-multichannel-listing.md) | Turn one photoshoot into ready-to-review copy for every sales channel at once |
 | [Cross-platform inventory sync](cross-platform-inventory-sync.md) | Catch the moment something sells on one channel before it oversells on another |
 | [Partner CRM steward](partner-crm-steward.md) | Keep a partner database honest: duplicates, contradicting statuses, missing next steps, cooling relationships, bounced contacts and silently dead automations |
+| [Safe scheduled agents](safe-scheduled-agents.md) | Let an agent run every night or every week without quietly breaking things, and notice when it quietly stops running |
 
 ## See one running
+
+![Excerpt of a blind crm-steward run against the sample CRM export](examples/crm-audit/preview.png)
 
 [`.claude/agents/inventory-sync.md`](.claude/agents/inventory-sync.md) is
 a working reference implementation of the cross-platform-inventory-sync
