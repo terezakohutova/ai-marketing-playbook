@@ -1,0 +1,11 @@
+partner_id,name,status,priority,owner,market,next_step,next_step_date,last_contact,live_offers
+P01,Nordlicht Coffee,Live,A,Mia,DE,Send Q4 bundle proposal,2026-10-20,2026-10-08,2
+P02,Ferrow Ceramics,Negotiation,A,Jonas,DE,,,2026-08-29,0
+P03,Bramble & Oak,Live,B,Mia,UK,Renew affiliate terms,2026-10-02,2026-09-30,1
+P04,Kestrel Outdoor,Paused,B,Jonas,DE,,,2026-09-12,1
+P05,Lumen Tea Co.,Prospect,C,Mia,UK,Intro call,2026-10-22,2026-09-25,0
+P06,Saltmarsh Soap,Lost,C,Jonas,UK,Follow-up on sample feedback,2026-10-28,2026-07-14,0
+P07,Nordlicht Coffee Roasters,Prospect,,Jonas,DE,Pitch holiday collab,2026-10-30,2026-10-01,0
+P08,Halden Linen,Live,B,Mia,,Monthly results check-in,2026-10-27,2026-10-06,3
+P09,Copperleaf Candles,Live,C,Jonas,UK,Share October results,2026-11-03,2026-09-29,1
+P10,Wren Paper Goods,Negotiation,B,Mia,UK,Send revised commission,2026-10-16,2026-10-09,0

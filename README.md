@@ -11,6 +11,7 @@ Not prompts. Not theory. Each pattern below is a workflow that has processed rea
 | [Draft-first outreach](draft-first-outreach.md) | Let an agent write and stage outbound content across many channels, without ever giving it the power to publish |
 | [Photo-to-multichannel listing](photo-to-multichannel-listing.md) | Turn one photoshoot into ready-to-review copy for every sales channel at once |
 | [Cross-platform inventory sync](cross-platform-inventory-sync.md) | Catch the moment something sells on one channel before it oversells on another |
+| [Partner CRM steward](partner-crm-steward.md) | Keep a partner database honest: duplicates, contradicting statuses, missing next steps, cooling relationships, bounced contacts and silently dead automations |
 
 ## See one running
 
@@ -20,11 +21,19 @@ pattern, not just its description. Copy it into your own project's
 `.claude/agents/`, point it at [`examples/sample-run/`](examples/sample-run/)
 (three small CSV exports), and compare what it finds against
 [`examples/sample-run/proposal-queue-output.md`](examples/sample-run/proposal-queue-output.md),
-the actual, unedited output of a fresh agent run against that data. The
-other two patterns are documented as workflow shape only, tool-agnostic
-on purpose, see "Stack" below.
+the actual, unedited output of a fresh agent run against that data.
 
-## Principles behind all three
+[`.claude/agents/crm-steward.md`](.claude/agents/crm-steward.md) does the
+same for the partner-crm-steward pattern: point it at
+[`examples/crm-audit/`](examples/crm-audit/) (a fictional partner CRM
+export with planted problems that are deliberately not listed anywhere)
+and compare with [`examples/crm-audit/audit-output.md`](examples/crm-audit/audit-output.md),
+the unedited output of a blind run.
+
+The other two patterns are documented as workflow shape only,
+tool-agnostic on purpose, see "Stack" below.
+
+## Principles behind all of them
 
 - **The agent drafts, a human publishes.** Every pattern here produces output a person reviews before anything goes live. None of them hold posting or payment credentials.
 - **One pass, not one click.** The unit of work is a batch (a photoshoot, a day's sales, a list of prospects), not a single item, because that's the shape the human's actual week takes.

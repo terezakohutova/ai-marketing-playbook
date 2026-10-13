@@ -1,0 +1,12 @@
+contact_id,partner_id,name,email,role,status
+C01,P01,Lena Vogt,lena@nordlicht-coffee.example,Partnerships,Active
+C02,P07,Tobias Brandt,tobias@nordlicht-coffee.example,Marketing,To verify
+C03,P02,Elif Kaya,elif@ferrowceramics.example,Founder,Active
+C04,P03,Sam Hollis,sam@brambleandoak.example,Affiliate manager,Active
+C05,P04,Anna Reiter,anna@kestrel-outdoor.example,E-commerce,Active
+C06,P05,Priya Shah,priya@lumentea.example,Founder,Active
+C07,P06,Grace Lowe,grace@saltmarshsoap.example,Buyer,Former
+C08,P08,Erik Lund,erik@haldenlinen.example,Sales,Active
+C09,P09,Tom Avery,tom@copperleafcandles.example,Owner,Active
+C10,P10,Nora Finch,nora@wrenpaper.example,Partnerships,Active
+C11,P09,Holly Avery,holly@copperleafcandles.example,Marketing,Active

@@ -1,0 +1,21 @@
+date,partner_id,source,summary
+2026-10-13,,morning-digest,Run OK; 2 items sent to owner
+2026-10-12,,morning-digest,Run OK; nothing needed attention
+2026-10-11,,morning-digest,Run OK; nothing needed attention
+2026-10-10,,nightly-sync,Run OK; 10 partners synced
+2026-10-10,,morning-digest,Run OK; 1 item sent to owner
+2026-10-09,P10,email,Nora asked for a revised commission table by mid-October
+2026-10-09,,nightly-sync,Run OK; 10 partners synced
+2026-10-09,,morning-digest,Run OK; nothing needed attention
+2026-10-08,P01,email,Lena confirmed interest in a Q4 bundle; wants a proposal
+2026-10-08,,nightly-sync,Run OK; 10 partners synced
+2026-10-08,,morning-digest,Run OK; nothing needed attention
+2026-10-07,P09,email,Delivery failure: holly@copperleafcandles.example (mailbox does not exist)
+2026-10-07,,nightly-sync,Run OK; 10 partners synced
+2026-10-07,,morning-digest,Run OK; 1 item sent to owner
+2026-10-06,P08,email,Erik sent September sales figures
+2026-10-06,,nightly-sync,Run OK; 10 partners synced
+2026-10-06,,morning-digest,Run OK; nothing needed attention
+2026-10-05,P04,email,Anna: our discount code is still live on your site this week; can we extend it to November?
+2026-10-05,,nightly-sync,Run OK; 10 partners synced
+2026-10-05,,morning-digest,Run OK; nothing needed attention
