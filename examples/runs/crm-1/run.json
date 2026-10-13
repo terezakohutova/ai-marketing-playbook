@@ -23,17 +23,17 @@
     {
       "path": "export/activity.csv",
       "copy_of": "examples/crm/crm-1/activity.csv",
-      "sha256": "b1eb16167be52bf48477879a8b670a811351974aa4be85f9f06209bd9fe5a717"
+      "sha256": "5512226a0f0e04c3f8b8715e9820f66efeff1806a191a6c64fa3816eb1b0673c"
     },
     {
       "path": "export/contacts.csv",
       "copy_of": "examples/crm/crm-1/contacts.csv",
-      "sha256": "a73545a9d78fd39da038f811f1ab67149c45491466492e772bba21425cd93603"
+      "sha256": "f3cdfa8522b34dda613f0f0edae6cce2331bf956edb3ee4d40d0d061da6a7ef4"
     },
     {
       "path": "export/partners.csv",
       "copy_of": "examples/crm/crm-1/partners.csv",
-      "sha256": "30c3455b89fa625284626edd44022a4542b6e1df549c4d27b1fd33cf5191389d"
+      "sha256": "9e160853827885c47e83403edb4ef1c8ebea7334855340f3eb893bbd168a59ad"
     }
   ],
   "not_given": [

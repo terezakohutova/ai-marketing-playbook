@@ -434,7 +434,10 @@ EXPECTED_RUN_SCORES = {
 
 
 def sha256(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # hash LF-normalised bytes so a Windows checkout with autocrlf gives the same value as CI
+    return hashlib.sha256(path.read_bytes().replace(b"
+", b"
+")).hexdigest()
 
 
 class CommittedRuns(unittest.TestCase):
