@@ -28,4 +28,4 @@ Selling the same one-of-a-kind or limited-stock items across multiple marketplac
 
 An agent with read access to each platform (browser automation is enough), one system treated as ground truth for current stock, and a proposal-queue file or ticket the human clears in a single daily pass rather than being interrupted per discrepancy.
 
-A working reference agent is in [`.claude/agents/inventory-sync.md`](.claude/agents/inventory-sync.md). Run it against [`examples/sample-run/`](examples/sample-run/) and compare with [the unedited output of a blind run](examples/sample-run/proposal-queue-output.md), which sorts 7 planted cases correctly, including the ones where trusting a marketplace's "sold" would have been wrong.
+A working reference agent is in [`.claude/agents/inventory-sync.md`](.claude/agents/inventory-sync.md). It has three sample datasets in [`examples/inventory/`](examples/inventory/), including cases where trusting a marketplace's "sold" would be wrong, a hand-written answer key for each in [`tests/answer_keys/`](tests/answer_keys/), and one unedited blind run per dataset in [`examples/runs/`](examples/runs/), scored in the [README](README.md#results).

@@ -1,0 +1,55 @@
+{
+  "dataset": "inv-3",
+  "pattern": "inventory",
+  "folder": "examples/inventory/inv-3",
+  "source_of_truth": "inventory.csv",
+  "findings": [
+    {
+      "rule": "I1",
+      "entity": "BK-201",
+      "bucket": "confirmed",
+      "why": "inventory sold, live on all three channels: one finding"
+    },
+    {
+      "rule": "I4",
+      "entity": "BK-202",
+      "bucket": "human",
+      "why": "shop-north lists it twice"
+    },
+    {
+      "rule": "I2",
+      "entity": "BK-203",
+      "bucket": "human",
+      "why": "auction-site 'ended', inventory live"
+    },
+    {
+      "rule": "I3",
+      "entity": "BK-205",
+      "bucket": "human",
+      "why": "on shop-south, unknown to inventory"
+    },
+    {
+      "rule": "I1",
+      "entity": "BK-208",
+      "bucket": "confirmed",
+      "why": "inventory sold, shop-north live (shop-south agrees)"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "I4",
+      "entity": "BK-209",
+      "why": "listed once in each of three files is not a duplicate row"
+    },
+    {
+      "rule": "I2",
+      "entity": "BK-207",
+      "why": "'SOLD' vs ' sold': case and whitespace only"
+    },
+    {
+      "rule": "I1",
+      "entity": "BK-204",
+      "why": "sold in inventory and on the auction site"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "dataset": "crm-2",
+  "pattern": "crm",
+  "folder": "examples/crm/crm-2",
+  "today": "2026-11-20",
+  "findings": [
+    {
+      "rule": "A1",
+      "entity": "morning-digest",
+      "bucket": "person",
+      "why": "no morning-digest line on 11-17"
+    },
+    {
+      "rule": "B1",
+      "entity": "P04+P05",
+      "bucket": "person",
+      "why": "Pebble Pet Co. / Pebble Pets: legal suffix dropped, one letter apart"
+    },
+    {
+      "rule": "B2",
+      "entity": "C13",
+      "bucket": "person",
+      "why": "points at P14, which doesn't exist"
+    },
+    {
+      "rule": "C2",
+      "entity": "P02",
+      "bucket": "person",
+      "why": "Live with live_offers=0"
+    },
+    {
+      "rule": "C3",
+      "entity": "P02",
+      "bucket": "safe",
+      "why": "mail 2026-11-17, last_contact 2026-11-15"
+    },
+    {
+      "rule": "C3",
+      "entity": "P07",
+      "bucket": "safe",
+      "why": "mail 2026-11-16 (a courier note, not a bounce), last_contact 2026-10-20"
+    },
+    {
+      "rule": "D5",
+      "entity": "P01",
+      "bucket": "person",
+      "why": "priority A, 11 days: above 10.5, within 14"
+    },
+    {
+      "rule": "D5",
+      "entity": "P06",
+      "bucket": "person",
+      "why": "priority B, 25 days: above 22.5, within 30"
+    },
+    {
+      "rule": "E1",
+      "entity": "C10",
+      "bucket": "safe",
+      "why": "'Undeliverable ... 550 5.1.1 ... User unknown' for maya@, still Active"
+    },
+    {
+      "rule": "F3",
+      "entity": "P03",
+      "bucket": "person",
+      "why": "open, no owner"
+    },
+    {
+      "rule": "F4",
+      "entity": "P04",
+      "bucket": "person",
+      "why": "open, no contacts"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "A1",
+      "entity": "nightly-sync",
+      "why": "logged every day"
+    },
+    {
+      "rule": "B1",
+      "entity": "P08+P09",
+      "why": "both contacts on gmail.com, a free-mail domain"
+    },
+    {
+      "rule": "B1",
+      "entity": "P01+P07",
+      "why": "Alder Bike Works / Alder Coffee share only the first word"
+    },
+    {
+      "rule": "C3",
+      "entity": "P08",
+      "why": "mail on the same day as last_contact"
+    },
+    {
+      "rule": "D1",
+      "entity": "P05",
+      "why": "Paused without a next step: not open"
+    },
+    {
+      "rule": "D2",
+      "entity": "P09",
+      "why": "next step date in the future"
+    },
+    {
+      "rule": "D4",
+      "entity": "P07",
+      "why": "priority C, 4 days since the 11-16 mail"
+    },
+    {
+      "rule": "E1",
+      "entity": "C11",
+      "why": "bounced and already marked Bounced"
+    },
+    {
+      "rule": "F2",
+      "entity": "P12",
+      "why": "no market, but Lost is not open"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+partner_id,name,status,priority,owner,market,next_step,next_step_date,last_contact,live_offers
+P01,Brightwater GmbH,Live,A,Ana,DE,Send January promo brief,2027-01-20,2027-01-12,1
+P02,Brightwater,Prospect,B,Lukas,AT,Intro call,2027-01-22,2027-01-05,0
+P03,Cobalt Cycling,Live,B,Ana,DE,Review Q4 numbers,,2026-12-10,2
+P04,Linden Botanicals,Lost,B,,DE,,,2026-09-01,1
+P05,Sundial Watches,Negotiation,C,Ana,,Send counter-offer,2027-01-19,2026-11-01,0
+P06,Meadowlark Games,Live,C,Lukas,AT,Holiday recap,2027-01-08,2026-12-20,1
+P06,Meadowlark Games,Live,C,Lukas,AT,Holiday recap,2027-01-08,2026-12-20,1
+P07,Orchard Lane Press,Paused,,Ana,DE,,,2026-10-15,0
+P08,Ridgeback Gear,Live,A,Lukas,DE,Send spring catalogue,2027-01-30,2027-01-06,2
+P09,Saltwind Surf,Prospect,C,Ana,AT,Send samples,2027-01-25,2026-12-28,0

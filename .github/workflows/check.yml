@@ -5,16 +5,27 @@ on:
   pull_request:
 
 jobs:
-  check:
+  lint:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/ruff-action@v3
+        with:
+          args: check
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.9", "3.13"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Unit tests (reference checks, agent outputs, links)
-        run: python -m unittest discover -s tests -v
-      - name: Score the committed CRM run against the rules
-        run: python tools/reference_check.py crm examples/crm-audit --today 2026-10-13 --against examples/crm-audit/audit-output.md
-      - name: Score the committed inventory run against the rules
-        run: python tools/reference_check.py inventory examples/sample-run --against examples/sample-run/proposal-queue-output.md
+          python-version: ${{ matrix.python }}
+      # Checker, scorer, pinned run scores, apply step, run-log check and links.
+      - run: python -m unittest discover -s tests -v
+      # Prints precision and recall per run and per rule into the job log.
+      - run: python tools/score_run.py --all --per-rule

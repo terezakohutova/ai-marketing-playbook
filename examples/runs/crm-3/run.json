@@ -1,0 +1,40 @@
+{
+  "dataset": "crm-3",
+  "date": "2026-10-13",
+  "runner": "Claude Code subagent (general-purpose type), fresh context, one run, no retries",
+  "model": "sonnet",
+  "prompt": "You are running as the agent defined in <run-dir>/agent.md. Read that file first: the text after its frontmatter is your instructions, and its `tools:` line is the only access you may use (Read, Grep, Glob). Then do the task those instructions describe on the export folder <run-dir>/export/ . Read only files inside <run-dir>/ and nothing else on disk. The pattern doc the instructions mention is not provided; work without it. When finished, write your complete output, exactly as you would present it to the person who asked, to <run-dir>/output.md with the Write tool. That is the only file you may write. Then hand back the single word: done.",
+  "prompt_note": "Exact prompt, except that the absolute path of the run folder (a local path) is replaced by <run-dir>.",
+  "files_given": [
+    {
+      "path": "agent.md",
+      "copy_of": ".claude/agents/crm-steward.md",
+      "sha256": "a4bf37ea2e890eda6aac39a585b3ee8356f7a4bc6bafbe7bf6d1eb937622158e"
+    },
+    {
+      "path": "export/activity.csv",
+      "copy_of": "examples/crm/crm-3/activity.csv",
+      "sha256": "5ee0fda5eb1ff168d5a5cc9ab61e12990d89cee029fb44cefccdf6437d91a387"
+    },
+    {
+      "path": "export/contacts.csv",
+      "copy_of": "examples/crm/crm-3/contacts.csv",
+      "sha256": "f0142a9334c1e8d7c01f833e498aef7ff00c99a34d6aeee1a9d26d744843d8e2"
+    },
+    {
+      "path": "export/partners.csv",
+      "copy_of": "examples/crm/crm-3/partners.csv",
+      "sha256": "59face4984a5a353b04dd0eeca8711623f59fc8646d59d89a71a83cfaac043f6"
+    }
+  ],
+  "not_given": [
+    "the pattern doc",
+    "dataset README",
+    "answer keys",
+    "earlier outputs",
+    "the checker"
+  ],
+  "isolation": "The run folder held only agent.md and the export CSVs. Read-only access was set by the prompt, not by a sandbox; the session also loaded the host project's own CLAUDE.md, which is unrelated to these datasets. The only file the run wrote was output.md.",
+  "output": "output.md, copied byte for byte",
+  "output_sha256": "a021baaace494a9188233352bd6b0cded2eec524012b1de4d71e89ffd626c866"
+}

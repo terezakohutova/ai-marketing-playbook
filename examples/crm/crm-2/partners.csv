@@ -1,0 +1,13 @@
+partner_id,name,status,priority,owner,market,next_step,next_step_date,last_contact,live_offers
+P01,Alder Bike Works,Live,A,Ravi,NL,Plan winter bundle,2026-11-28,2026-11-09,2
+P02,Harbor Kitchen Supply,Live,B,Ravi,NL,Send Q1 forecast,2026-12-01,2026-11-15,0
+P03,Quill & Ink,Negotiation,B,,UK,Send contract draft,2026-11-25,2026-11-14,0
+P04,Pebble Pet Co.,Prospect,C,Ravi,UK,Intro call,2026-12-03,2026-11-02,0
+P05,Pebble Pets,Paused,C,Ines,UK,,,2026-06-30,0
+P06,Marlow Outdoor Ltd,Live,B,Ines,UK,Review affiliate payout,2026-12-05,2026-10-26,1
+P07,Alder Coffee,Live,C,Ines,NL,Share November results,2026-11-30,2026-10-20,1
+P08,Juniper Yarns,Live,B,Ravi,UK,Monthly check-in,2026-11-27,2026-11-18,1
+P09,Ostara Ceramics,Prospect,B,Ines,NL,Send samples,2026-11-24,2026-11-10,0
+P10,Tidewater Prints,Live,A,Ravi,UK,Quarterly review,2026-12-10,2026-11-17,3
+P11,Kiln Street Studio,Live,B,Ines,UK,Renew terms,2026-11-26,2026-11-13,1
+P12,Fennel & Fig,Lost,C,Ravi,,,,2026-05-04,0

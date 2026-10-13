@@ -1,0 +1,45 @@
+{
+  "dataset": "inv-3",
+  "date": "2026-10-13",
+  "runner": "Claude Code subagent (general-purpose type), fresh context, one run, no retries",
+  "model": "sonnet",
+  "prompt": "You are running as the agent defined in <run-dir>/agent.md. Read that file first: the text after its frontmatter is your instructions, and its `tools:` line is the only access you may use (Read, Grep, Glob). Then do the task those instructions describe on the export folder <run-dir>/export/ . Read only files inside <run-dir>/ and nothing else on disk. The pattern doc the instructions mention is not provided; work without it. When finished, write your complete output, exactly as you would present it to the person who asked, to <run-dir>/output.md with the Write tool. That is the only file you may write. Then hand back the single word: done.",
+  "prompt_note": "Exact prompt, except that the absolute path of the run folder (a local path) is replaced by <run-dir>.",
+  "files_given": [
+    {
+      "path": "agent.md",
+      "copy_of": ".claude/agents/inventory-sync.md",
+      "sha256": "b9a6dddb237b37c32b3a2582c00baeb8ea665838bfd47f68f2b64ee456de937b"
+    },
+    {
+      "path": "export/auction-site.csv",
+      "copy_of": "examples/inventory/inv-3/auction-site.csv",
+      "sha256": "b96a43cdb98514f3e5548b2a61dc2351990a91997bf3a479c009004050c2a7e6"
+    },
+    {
+      "path": "export/inventory.csv",
+      "copy_of": "examples/inventory/inv-3/inventory.csv",
+      "sha256": "5138efeffeedba09db88b23396e34eb0f73fd48dae4589213d56eb4decb08ae9"
+    },
+    {
+      "path": "export/shop-north.csv",
+      "copy_of": "examples/inventory/inv-3/shop-north.csv",
+      "sha256": "2c7dc69679b01ee16709ad089022997019f83b351321560ebe2701b83ba89ff0"
+    },
+    {
+      "path": "export/shop-south.csv",
+      "copy_of": "examples/inventory/inv-3/shop-south.csv",
+      "sha256": "816b65d04af03d69ba94fa5989efd38b6e582667a8932c1ba926b1a4d913eb1b"
+    }
+  ],
+  "not_given": [
+    "the pattern doc",
+    "dataset README",
+    "answer keys",
+    "earlier outputs",
+    "the checker"
+  ],
+  "isolation": "The run folder held only agent.md and the export CSVs. Read-only access was set by the prompt, not by a sandbox; the session also loaded the host project's own CLAUDE.md, which is unrelated to these datasets. The only file the run wrote was output.md.",
+  "output": "output.md, copied byte for byte",
+  "output_sha256": "00fe46e2de581fdfc4bf44538f6ea54f58f8d18da6125a644064252bfbbe92f4"
+}

@@ -1,0 +1,40 @@
+{
+  "dataset": "inv-2",
+  "date": "2026-10-13",
+  "runner": "Claude Code subagent (general-purpose type), fresh context, one run, no retries",
+  "model": "sonnet",
+  "prompt": "You are running as the agent defined in <run-dir>/agent.md. Read that file first: the text after its frontmatter is your instructions, and its `tools:` line is the only access you may use (Read, Grep, Glob). Then do the task those instructions describe on the export folder <run-dir>/export/ . Read only files inside <run-dir>/ and nothing else on disk. The pattern doc the instructions mention is not provided; work without it. When finished, write your complete output, exactly as you would present it to the person who asked, to <run-dir>/output.md with the Write tool. That is the only file you may write. Then hand back the single word: done.",
+  "prompt_note": "Exact prompt, except that the absolute path of the run folder (a local path) is replaced by <run-dir>.",
+  "files_given": [
+    {
+      "path": "agent.md",
+      "copy_of": ".claude/agents/inventory-sync.md",
+      "sha256": "b9a6dddb237b37c32b3a2582c00baeb8ea665838bfd47f68f2b64ee456de937b"
+    },
+    {
+      "path": "export/marketplace-a.csv",
+      "copy_of": "examples/inventory/inv-2/marketplace-a.csv",
+      "sha256": "8e874cdc890ce1bb860f44be12e890dd4042530daa1345a9c5b3d5e62c9acd6a"
+    },
+    {
+      "path": "export/marketplace-b.csv",
+      "copy_of": "examples/inventory/inv-2/marketplace-b.csv",
+      "sha256": "349b3844cb985beaf8a84ba5db90b41a2894b77b86f591b9da94a63e3d2c6d4e"
+    },
+    {
+      "path": "export/storefront.csv",
+      "copy_of": "examples/inventory/inv-2/storefront.csv",
+      "sha256": "070394cac11d0e0ceed7058bf686013ca7c2569eb751b2757b05471a089fca82"
+    }
+  ],
+  "not_given": [
+    "the pattern doc",
+    "dataset README",
+    "answer keys",
+    "earlier outputs",
+    "the checker"
+  ],
+  "isolation": "The run folder held only agent.md and the export CSVs. Read-only access was set by the prompt, not by a sandbox; the session also loaded the host project's own CLAUDE.md, which is unrelated to these datasets. The only file the run wrote was output.md.",
+  "output": "output.md, copied byte for byte",
+  "output_sha256": "dca112c8f1b0f7d8e86c131293af5d22b7c090467f04af8668bdee4d552499d2"
+}

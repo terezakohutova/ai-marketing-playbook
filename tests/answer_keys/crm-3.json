@@ -1,0 +1,121 @@
+{
+  "dataset": "crm-3",
+  "pattern": "crm",
+  "folder": "examples/crm/crm-3",
+  "today": "2027-01-15",
+  "findings": [
+    {
+      "rule": "B1",
+      "entity": "P01+P02",
+      "bucket": "person",
+      "why": "Brightwater GmbH / Brightwater, same contact domain"
+    },
+    {
+      "rule": "B3",
+      "entity": "P06",
+      "bucket": "person",
+      "why": "partners.csv has the P06 row twice"
+    },
+    {
+      "rule": "C1",
+      "entity": "P04",
+      "bucket": "person",
+      "why": "Lost with live_offers=1"
+    },
+    {
+      "rule": "D1",
+      "entity": "P03",
+      "bucket": "person",
+      "why": "next step without a date"
+    },
+    {
+      "rule": "D2",
+      "entity": "P06",
+      "bucket": "person",
+      "why": "next step date 2027-01-08"
+    },
+    {
+      "rule": "D4",
+      "entity": "P03",
+      "bucket": "person",
+      "why": "priority B, 36 days since 2026-12-10 (the 01-13 bounce is not contact)"
+    },
+    {
+      "rule": "D4",
+      "entity": "P05",
+      "bucket": "person",
+      "why": "priority C, 75 days since 2026-11-01"
+    },
+    {
+      "rule": "E1",
+      "entity": "C03",
+      "bucket": "safe",
+      "why": "'Delivery Status Notification (Failure)' for Theo.Marsh@ (case differs), still Active"
+    },
+    {
+      "rule": "E2",
+      "entity": "P02",
+      "bucket": "person",
+      "why": "only a To verify contact"
+    },
+    {
+      "rule": "E2",
+      "entity": "P05",
+      "bucket": "person",
+      "why": "To verify and Former only"
+    },
+    {
+      "rule": "F2",
+      "entity": "P05",
+      "bucket": "person",
+      "why": "open, no market"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "A1",
+      "entity": "nightly-sync",
+      "why": "logged every day"
+    },
+    {
+      "rule": "A1",
+      "entity": "morning-digest",
+      "why": "logged every day"
+    },
+    {
+      "rule": "B1",
+      "entity": "P06+P09",
+      "why": "both contacts on outlook.com, a free-mail domain"
+    },
+    {
+      "rule": "C1",
+      "entity": "P07",
+      "why": "Paused with 0 live offers"
+    },
+    {
+      "rule": "D3",
+      "entity": "P04",
+      "why": "Lost without a next step"
+    },
+    {
+      "rule": "D5",
+      "entity": "P08",
+      "why": "priority A, 9 days: under three quarters of 14"
+    },
+    {
+      "rule": "F1",
+      "entity": "P07",
+      "why": "no priority, but Paused is not open"
+    },
+    {
+      "rule": "F3",
+      "entity": "P04",
+      "why": "no owner, but Lost is not open"
+    },
+    {
+      "rule": "F4",
+      "entity": "P07",
+      "why": "no contacts, but Paused is not open"
+    }
+  ]
+}

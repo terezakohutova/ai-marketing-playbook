@@ -1,0 +1,67 @@
+{
+  "dataset": "inv-1",
+  "pattern": "inventory",
+  "folder": "examples/inventory/inv-1",
+  "source_of_truth": "storefront.csv",
+  "findings": [
+    {
+      "rule": "I1",
+      "entity": "ITM-014",
+      "bucket": "confirmed",
+      "why": "storefront sold, live on both marketplaces"
+    },
+    {
+      "rule": "I1",
+      "entity": "ITM-040",
+      "bucket": "confirmed",
+      "why": "storefront sold, marketplace-b live"
+    },
+    {
+      "rule": "I1",
+      "entity": "ITM-058",
+      "bucket": "confirmed",
+      "why": "storefront 'Sold', marketplace-a 'LIVE ' (case and whitespace)"
+    },
+    {
+      "rule": "I2",
+      "entity": "ITM-022",
+      "bucket": "human",
+      "why": "marketplace-b sold, storefront live"
+    },
+    {
+      "rule": "I2",
+      "entity": "ITM-043",
+      "bucket": "human",
+      "why": "marketplace-a reserved, storefront live"
+    },
+    {
+      "rule": "I2",
+      "entity": "ITM-055",
+      "bucket": "human",
+      "why": "both marketplaces sold, storefront live: agreement between channels is not corroboration"
+    },
+    {
+      "rule": "I3",
+      "entity": "ITM-052",
+      "bucket": "human",
+      "why": "on marketplace-a, unknown to the storefront"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "I1",
+      "entity": "ITM-035",
+      "why": "sold everywhere"
+    },
+    {
+      "rule": "I2",
+      "entity": "ITM-031",
+      "why": "live everywhere"
+    },
+    {
+      "rule": "I3",
+      "entity": "ITM-061",
+      "why": "known to the storefront"
+    }
+  ]
+}

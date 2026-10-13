@@ -1,0 +1,15 @@
+contact_id,partner_id,name,email,role,status
+C01,P01,Joost Bakker,joost@alderbikeworks.example,Partnerships,Active
+C02,P02,Fatima Noor,fatima@harborkitchen.example,Buyer,Active
+C03,P03,Owen Price,owen@quillandink.example,Founder,Active
+C04,P05,Bea Collins,bea@pebblepets.example,Marketing,Active
+C05,P06,Callum Reid,callum@marlowoutdoor.example,Affiliate manager,Active
+C06,P07,Sanne de Wit,sanne@aldercoffee.example,Owner,Active
+C07,P08,Maeve Doyle,juniper.yarns@gmail.com,Owner,Active
+C08,P09,Lotte Visser,ostara.studio@gmail.com,Founder,Active
+C09,P10,Leo Grant,leo@tidewaterprints.example,Partnerships,Active
+C10,P10,Maya Grant,maya@tidewaterprints.example,Marketing,Active
+C11,P11,Kai Moreno,kai@kilnstreet.example,Sales,Bounced
+C12,P11,Dana Moreno,dana@kilnstreet.example,Owner,Active
+C13,P14,Iris Holt,iris@northgatefoods.example,Buyer,Active
+C14,P12,Ruth Fenn,ruth@fennelandfig.example,Founder,Active

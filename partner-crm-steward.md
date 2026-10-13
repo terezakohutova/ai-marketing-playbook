@@ -14,7 +14,7 @@ A small team keeps its partners (brands, affiliates, suppliers, resellers) in on
    - *Morning:* read the mailbox for partner mail, update last contact and contacts (new people land as "to verify", bounces as "bounced"), and send one short digest **only if something needs a person today**.
    - *Weekly:* a full audit that always reports, even "all clear", so silence never means "the automation died".
 3. **Audit in a fixed order**, from the most dangerous to the most cosmetic: automation health, integrity (duplicates, broken relations), consistency (status vs. what is actually live), action (missing or overdue next steps, relationships going cold against a cadence set by priority), contacts, data gaps, trend vs. last week.
-4. **Propose, then fix only the safe class.** Typos in machine-owned fields, a missing link that has exactly one candidate: fixed and logged. Merging duplicates, changing a status, closing a partner: proposed with evidence, done after a yes.
+4. **Propose, then fix only the safe class.** Typos in machine-owned fields, a missing link that has exactly one candidate: marked safe to apply, then applied by a routine that may write only those fields, and logged. Merging duplicates, changing a status, closing a partner: proposed with evidence, done after a yes.
 5. **Pilot every change to the automation on a few partners first**, with the partner list as a setting, before it touches all of them.
 
 ## Why this beats the alternatives
@@ -33,4 +33,6 @@ A small team keeps its partners (brands, affiliates, suppliers, resellers) in on
 
 A database with the owner split above, scheduled agent runs (a cloud routine or cron) with read access to the systems of record and write access only to machine-owned fields, a run log, and an on-demand agent for audits: [`.claude/agents/crm-steward.md`](.claude/agents/crm-steward.md). That agent is the audit half only and is read-only by its tool list: it marks the safe class of fixes as "safe to apply" but never applies them. Applying them (step 4) belongs to the scheduled routine, under the rules in [safe scheduled agents](safe-scheduled-agents.md).
 
-It runs against the sample export in [`examples/crm-audit/`](examples/crm-audit/). The unedited output of a blind run is in [`audit-output.md`](examples/crm-audit/audit-output.md), and a second independent run in [`audit-output-rerun.md`](examples/crm-audit/audit-output-rerun.md) shows how much two runs differ. [`tools/reference_check.py`](tools/reference_check.py) scores both against the written rules: 14 of 14 and 13 of 14.
+Applying a confirmed proposal is a separate, person-started step: [`tools/apply_changes.py`](tools/apply_changes.py) takes a signed changes file, refuses anything stale, and writes the old value to a change log before the new one ([example](examples/apply/)).
+
+The agent has three sample exports in [`examples/crm/`](examples/crm/), a hand-written answer key for each in [`tests/answer_keys/`](tests/answer_keys/), and one unedited blind run per dataset in [`examples/runs/`](examples/runs/). [`tools/score_run.py`](tools/score_run.py) scores each run's findings block against its key; the current numbers are in the [README](README.md#results).

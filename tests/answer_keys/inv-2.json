@@ -1,0 +1,66 @@
+{
+  "dataset": "inv-2",
+  "pattern": "inventory",
+  "folder": "examples/inventory/inv-2",
+  "source_of_truth": "storefront.csv",
+  "findings": [
+    {
+      "rule": "I1",
+      "entity": "PRT-101",
+      "bucket": "confirmed",
+      "why": "storefront sold, marketplace-a live"
+    },
+    {
+      "rule": "I2",
+      "entity": "PRT-101",
+      "bucket": "human",
+      "why": "marketplace-b reserved: a separate finding, not hidden by the I1 one"
+    },
+    {
+      "rule": "I2",
+      "entity": "PRT-105",
+      "bucket": "human",
+      "why": "storefront reserved, both marketplaces live"
+    },
+    {
+      "rule": "I2",
+      "entity": "PRT-107",
+      "bucket": "human",
+      "why": "marketplace-a sold, storefront live"
+    },
+    {
+      "rule": "I3",
+      "entity": "PRT-108",
+      "bucket": "human",
+      "why": "marketplace-a lists it as sold, the storefront has no record"
+    },
+    {
+      "rule": "I1",
+      "entity": "PRT-110",
+      "bucket": "confirmed",
+      "why": "storefront sold, marketplace-b live"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "I1",
+      "entity": "PRT-102",
+      "why": "sold in storefront and on marketplace-a, absent from marketplace-b"
+    },
+    {
+      "rule": "I2",
+      "entity": "PRT-103",
+      "why": "'Live ' and 'LIVE' are live: case and whitespace only"
+    },
+    {
+      "rule": "I3",
+      "entity": "PRT-104",
+      "why": "absent from one marketplace is not an unknown item"
+    },
+    {
+      "rule": "I1",
+      "entity": "PRT-106",
+      "why": "sold everywhere"
+    }
+  ]
+}

@@ -1,16 +1,12 @@
-# Second blind run, 2026-10-13
+# Earlier run: crm-steward, second attempt (previous spec)
 
-**How this was produced.** A second, independent fresh Claude Sonnet agent got the body of
-[`.claude/agents/crm-steward.md`](../../.claude/agents/crm-steward.md) as its instructions,
-read-only tools (Read, Grep, Glob), and a folder holding only `partner-crm-steward.md` plus
-this folder's three CSVs and README (no `audit-output.md`). Everything under the line is its
-output, unedited. It is kept next to [`audit-output.md`](audit-output.md) to show run-to-run
-variance, not to replace it.
-
-**Scored against the written rules** (`python tools/reference_check.py crm examples/crm-audit --against examples/crm-audit/audit-output-rerun.md`):
-13 of the 14 rule-derived findings. It missed one: P06 Saltmarsh Soap's only contact is
-`Former` (section E). It flagged the Lost partner's leftover next step but not the contact.
-The first run caught both. That miss is the reason the reference check and its test exist.
+**How this was produced (2026-10-13, before the rule ids and the findings block existed).**
+A fresh Claude Sonnet agent got the then-current body of the crm-steward agent as its
+instructions, read-only tools (Read, Grep, Glob), and a folder holding only
+`partner-crm-steward.md` plus the CSVs and README of [`crm-1`](../../../crm/crm-1/). Everything
+under the line is its output, unedited. By hand, it missed one finding the rules imply:
+P06's only contact is `Former` (now rule E2). It has no machine-readable findings block, so
+the current scorer can't score it; it is kept to show run-to-run variance.
 
 ---
 

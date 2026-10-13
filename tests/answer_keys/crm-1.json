@@ -1,0 +1,123 @@
+{
+  "dataset": "crm-1",
+  "pattern": "crm",
+  "folder": "examples/crm/crm-1",
+  "today": "2026-10-13",
+  "findings": [
+    {
+      "rule": "A1",
+      "entity": "nightly-sync",
+      "bucket": "person",
+      "why": "no nightly-sync line on 10-11, 10-12, 10-13"
+    },
+    {
+      "rule": "B1",
+      "entity": "P01+P07",
+      "bucket": "person",
+      "why": "Nordlicht Coffee / Nordlicht Coffee Roasters, same contact domain"
+    },
+    {
+      "rule": "C1",
+      "entity": "P04",
+      "bucket": "person",
+      "why": "Paused with live_offers=1"
+    },
+    {
+      "rule": "C3",
+      "entity": "P04",
+      "bucket": "safe",
+      "why": "mail 2026-10-05, last_contact 2026-09-12"
+    },
+    {
+      "rule": "D1",
+      "entity": "P02",
+      "bucket": "person",
+      "why": "Negotiation, no next step and no date"
+    },
+    {
+      "rule": "D2",
+      "entity": "P03",
+      "bucket": "person",
+      "why": "next step date 2026-10-02"
+    },
+    {
+      "rule": "D3",
+      "entity": "P06",
+      "bucket": "person",
+      "why": "Lost with a next step"
+    },
+    {
+      "rule": "D4",
+      "entity": "P02",
+      "bucket": "person",
+      "why": "priority A, 45 days since 2026-08-29"
+    },
+    {
+      "rule": "E1",
+      "entity": "C11",
+      "bucket": "safe",
+      "why": "holly@ bounced 2026-10-07, still Active"
+    },
+    {
+      "rule": "E2",
+      "entity": "P06",
+      "bucket": "person",
+      "why": "only a Former contact"
+    },
+    {
+      "rule": "E2",
+      "entity": "P07",
+      "bucket": "person",
+      "why": "only a To verify contact"
+    },
+    {
+      "rule": "F1",
+      "entity": "P07",
+      "bucket": "person",
+      "why": "open, no priority"
+    },
+    {
+      "rule": "F2",
+      "entity": "P08",
+      "bucket": "person",
+      "why": "open, no market"
+    }
+  ],
+  "negatives": [
+    {
+      "rule": "A1",
+      "entity": "morning-digest",
+      "why": "logged every day"
+    },
+    {
+      "rule": "B2",
+      "entity": "C02",
+      "why": "points at P07, which exists"
+    },
+    {
+      "rule": "B3",
+      "entity": "P01",
+      "why": "one row"
+    },
+    {
+      "rule": "C2",
+      "entity": "P01",
+      "why": "Live with 2 live offers"
+    },
+    {
+      "rule": "C3",
+      "entity": "P09",
+      "why": "the only mail after last_contact is a bounce, which is not contact"
+    },
+    {
+      "rule": "D4",
+      "entity": "P04",
+      "why": "31 days on a B window, but Paused is not open"
+    },
+    {
+      "rule": "E2",
+      "entity": "P09",
+      "why": "has Active contacts besides the bounced one"
+    }
+  ]
+}

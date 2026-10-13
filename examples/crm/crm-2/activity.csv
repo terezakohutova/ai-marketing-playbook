@@ -1,0 +1,20 @@
+date,partner_id,source,summary
+2026-11-20,,nightly-sync,Run OK; 12 partners synced
+2026-11-20,,morning-digest,Run OK; 1 item sent to owner
+2026-11-19,P10,email,Undeliverable: Re: Q4 review - 550 5.1.1 <maya@tidewaterprints.example>: Recipient address rejected: User unknown
+2026-11-19,,nightly-sync,Run OK; 12 partners synced
+2026-11-19,,morning-digest,Run OK; nothing needed attention
+2026-11-18,P08,email,Maeve sent the winter stock list
+2026-11-18,,nightly-sync,Run OK; 12 partners synced
+2026-11-18,,morning-digest,Run OK; nothing needed attention
+2026-11-17,P02,email,Fatima asked when the spring promo will go live
+2026-11-17,,nightly-sync,Run OK; 12 partners synced
+2026-11-16,P07,email,Courier delivery failed twice; Sanne asked us to re-send the samples to the shop
+2026-11-16,P11,email,Mail delivery failed: returning message to sender (kai@kilnstreet.example)
+2026-11-16,,nightly-sync,Run OK; 12 partners synced
+2026-11-16,,morning-digest,Run OK; nothing needed attention
+2026-11-15,,nightly-sync,Run OK; 12 partners synced
+2026-11-15,,morning-digest,Run OK; 1 item sent to owner
+2026-11-14,P03,email,Owen returned the signed NDA
+2026-11-14,,nightly-sync,Run OK; 12 partners synced
+2026-11-14,,morning-digest,Run OK; nothing needed attention

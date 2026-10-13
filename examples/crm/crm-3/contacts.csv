@@ -1,0 +1,11 @@
+contact_id,partner_id,name,email,role,status
+C01,P01,Jana Albers,jana@brightwater.example,Partnerships,Active
+C02,P02,Felix Roth,felix@brightwater.example,Sales,To verify
+C03,P03,Theo Marsh,theo.marsh@cobaltcycling.example,Marketing,Active
+C04,P03,Ida Kern,ida@cobaltcycling.example,Founder,Active
+C05,P04,Paula Linde,paula@lindenbotanicals.example,Buyer,Active
+C06,P05,Omar Haddad,omar@sundialwatches.example,Sales,To verify
+C07,P05,Rhea Stone,rhea@sundialwatches.example,Partnerships,Former
+C08,P06,Milo Brandt,meadowlark.games@outlook.com,Owner,Active
+C10,P08,Greta Voss,greta@ridgebackgear.example,E-commerce,Active
+C11,P09,Noah Weiss,saltwind.surf@outlook.com,Founder,Active

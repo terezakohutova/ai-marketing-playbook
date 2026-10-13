@@ -1,0 +1,17 @@
+date,partner_id,source,summary
+2027-01-15,,nightly-sync,Run OK; 9 partners synced
+2027-01-15,,morning-digest,Run OK; 3 items sent to owner
+2027-01-14,,nightly-sync,Run OK; 9 partners synced
+2027-01-14,,morning-digest,Run OK; nothing needed attention
+2027-01-13,P03,email,Delivery Status Notification (Failure): Theo.Marsh@cobaltcycling.example - address not found
+2027-01-13,,nightly-sync,Run OK; 9 partners synced
+2027-01-13,,morning-digest,Run OK; 1 item sent to owner
+2027-01-12,P01,email,Jana confirmed the format of the promo brief
+2027-01-12,,nightly-sync,Run OK; 9 partners synced
+2027-01-12,,morning-digest,Run OK; nothing needed attention
+2027-01-11,,nightly-sync,Run OK; 9 partners synced
+2027-01-11,,morning-digest,Run OK; nothing needed attention
+2027-01-10,,nightly-sync,Run OK; 9 partners synced
+2027-01-10,,morning-digest,Run OK; nothing needed attention
+2027-01-09,,nightly-sync,Run OK; 9 partners synced
+2027-01-09,,morning-digest,Run OK; nothing needed attention

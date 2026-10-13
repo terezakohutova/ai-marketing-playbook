@@ -1,0 +1,23 @@
+{
+  "jobs": {
+    "nightly-sync": {
+      "every": "day",
+      "kind": "sync",
+      "may_write": [
+        "partners.live_offers",
+        "partners.last_contact",
+        "contacts.status"
+      ]
+    },
+    "morning-digest": {
+      "every": "day",
+      "kind": "digest",
+      "may_write": []
+    },
+    "weekly-heartbeat": {
+      "every": "week",
+      "kind": "heartbeat",
+      "may_write": []
+    }
+  }
+}

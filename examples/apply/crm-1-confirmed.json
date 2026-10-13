@@ -1,0 +1,8 @@
+{
+  "approved_by": "Mia",
+  "note": "The two safe-to-apply proposals from examples/runs/crm-1/output.md, after a person read them and said yes.",
+  "changes": [
+    {"file": "partners.csv", "id": "P04", "field": "last_contact", "old": "2026-09-12", "new": "2026-10-05", "finding": "C3 P04"},
+    {"file": "contacts.csv", "id": "C11", "field": "status", "old": "Active", "new": "Bounced", "finding": "E1 C11"}
+  ]
+}

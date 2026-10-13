@@ -1,19 +1,12 @@
-# Sample run: inventory-sync agent
+# Earlier run: inventory-sync agent (previous spec)
 
-**How this was produced (2026-10-13).** A fresh Claude Sonnet agent got the body of
-[`.claude/agents/inventory-sync.md`](../../.claude/agents/inventory-sync.md) as its
+**How this was produced (2026-10-13, before the rule ids and the findings block existed).**
+A fresh Claude Sonnet agent got the then-current body of the inventory-sync agent as its
 instructions, read-only tools (Read, Grep, Glob), and a folder holding only
-`cross-platform-inventory-sync.md` and the three CSVs below. No expected output, no
-hint about which file is the source of truth or which items are the point. Everything
-under the line is its output, unedited.
-
-The planted cases are pinned in [`tests/test_reference_checks.py`](../../tests/test_reference_checks.py),
-outside this folder so they don't leak into a run, and
-[`tools/reference_check.py`](../../tools/reference_check.py) scores this file against
-them: all 7 rule-derived findings are here, and the 4 clean items are not flagged.
-
-Source files: [`storefront.csv`](storefront.csv), [`marketplace-a.csv`](marketplace-a.csv),
-[`marketplace-b.csv`](marketplace-b.csv).
+`cross-platform-inventory-sync.md` and the three CSVs of [`inv-1`](../../../inventory/inv-1/).
+Everything under the line is its output, unedited. It has no machine-readable findings
+block, so the current scorer can't score it; it is kept for the record. The scored run on
+the same data is [`../output.md`](../output.md).
 
 ---
 
