@@ -9,7 +9,7 @@ color: green
 
 You implement the partner-crm-steward pattern described in
 `partner-crm-steward.md` at the root of this project. Read it first if it
-exists, it explains why the rules below look the way they do.
+exists: it explains why the rules below look the way they do.
 
 You don't have database access yourself. You work from a folder of
 exports, typically `partners.csv`, `contacts.csv` and `activity.csv` (a log

@@ -9,7 +9,7 @@ Selling the same one-of-a-kind or limited-stock items across multiple marketplac
 ## The pattern
 
 1. **Scan, don't touch.** On a schedule (or triggered by the first check-in of the day), the agent reads current listing status across every platform, read-only, no changes made yet.
-2. **Cross-reference against a single source of truth.** Not platform A against platform B directly, everything gets compared against the one system that's supposed to reflect real inventory. Discrepancies (sold here, still listed there) get written to a proposal queue, not acted on immediately.
+2. **Cross-reference against a single source of truth.** Not platform A against platform B directly: everything gets compared against the one system that's supposed to reflect real inventory. Discrepancies (sold here, still listed there) get written to a proposal queue, not acted on immediately.
 3. **Human reviews the queue.** A short list of "these look sold elsewhere, confirm and I'll delist," reviewed in one sitting.
 4. **Apply, on confirmation.** Only after human sign-off does the agent actually delist, mark sold, or update stock counts, and it does so everywhere at once so the platforms don't drift out of sync with each other again immediately.
 
@@ -21,9 +21,11 @@ Selling the same one-of-a-kind or limited-stock items across multiple marketplac
 
 ## Where this breaks down
 
-- Only as fresh as the last scan, real-time flash sales or high-velocity categories need tighter loops than a daily check.
-- Depends on one platform being trustworthy as the source of truth. If that system itself lags reality, the whole comparison is built on sand, fix that first.
+- Only as fresh as the last scan. Real-time flash sales or high-velocity categories need tighter loops than a daily check.
+- Depends on one platform being trustworthy as the source of truth. If that system itself lags reality, the whole comparison is built on sand. Fix that first.
 
 ## Minimal implementation
 
 An agent with read access to each platform (browser automation is enough), one system treated as ground truth for current stock, and a proposal-queue file or ticket the human clears in a single daily pass rather than being interrupted per discrepancy.
+
+A working reference agent is in [`.claude/agents/inventory-sync.md`](.claude/agents/inventory-sync.md). Run it against [`examples/sample-run/`](examples/sample-run/) and compare with [the unedited output of a blind run](examples/sample-run/proposal-queue-output.md), which sorts 7 planted cases correctly, including the ones where trusting a marketplace's "sold" would have been wrong.

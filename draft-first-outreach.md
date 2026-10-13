@@ -11,7 +11,7 @@ Outreach is repetitive enough to automate and risky enough that you don't want a
 1. **Agent picks the targets.** Given a piece of content and a set of destinations (a list of groups, a list of prospects), the agent decides what goes where, based on rules that already exist (category match, exclusion lists, "we already reached this contact this month").
 2. **Agent writes the draft per destination.** Not one message copy-pasted everywhere. Each destination gets its own draft in a voice appropriate to that channel, referencing the same underlying content or offer.
 3. **Agent stages, never sends.** Every draft is left open and visible (a browser tab, a drafts folder, a review queue) in its native tool. The agent's job stops at "ready to review."
-4. **Human does one pass.** A person skims the batch and hits send/publish themselves, channel by channel. This is the only step with a publish-capable credential in play, and it's a human's finger on it.
+4. **Human does one pass.** A person skims the batch and hits send/publish themselves, channel by channel. Publishing is a human action, every time.
 
 ## Why this beats the alternatives
 
@@ -22,8 +22,9 @@ Outreach is repetitive enough to automate and risky enough that you don't want a
 ## Where this breaks down
 
 - Channels with hard rate limits or anti-bot detection need the human-paced review step anyway, so this pattern doesn't save time there, only quality.
-- It assumes the human review pass actually happens. If drafts pile up unreviewed, you've built a to-do list generator, not an outreach system, budget calendar time for the review pass.
+- It assumes the human review pass actually happens. If drafts pile up unreviewed, you've built a to-do list generator, not an outreach system. Budget calendar time for the review pass.
+- A logged-in browser session can publish, whoever is driving it. If the agent types into the same session a person later sends from, "never sends" is enforced by the agent's permissions and instructions, not by a missing credential. Where a channel has a real drafts folder, a scheduled-post queue or an API with a draft-only scope, stage there instead and keep the agent out of the publishing session.
 
 ## Minimal implementation
 
-An agent with browser access, a rules file describing what content maps to what destinations and any exclusions, and a lightweight way to track "already reached" so re-runs don't duplicate outreach. No posting credentials in the agent's hands, ever, just the ability to open tabs and type.
+An agent with browser access, a rules file describing what content maps to what destinations and any exclusions, and a lightweight way to track "already reached" so re-runs don't duplicate outreach. Give the agent the narrowest access that still lets it stage: a drafts-only scope where one exists, otherwise a browser it can type in, with a permission rule that blocks the send/publish action and a person who presses it.
