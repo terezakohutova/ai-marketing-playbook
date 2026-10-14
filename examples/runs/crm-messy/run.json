@@ -18,7 +18,7 @@
     {
       "path": "agent.md",
       "copy_of": ".claude/agents/crm-steward.md",
-      "sha256": "5cd7bae8d02353e1959607c8cad46ff31e7a78696fe2be191132f0a28a118f07"
+      "sha256": "7e8025b5e4cd5e304fc63b278ddb7390e166532332905d9081fca35fbb12adc9"
     },
     {
       "path": "export/activity.csv",
@@ -44,5 +44,5 @@
     "the checker"
   ],
   "output": "output.md: the session's final answer, line endings normalised to LF, otherwise unedited",
-  "output_sha256": "6a23e4932b7fc647a77ef64befe0fd831747db1948722df6516235556e3c7033"
+  "output_sha256": "aaa969599b9e51f2ce3587dc8dbab5352b29a8b99ef89c2e298363e27d34df7c"
 }

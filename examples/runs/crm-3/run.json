@@ -18,7 +18,7 @@
     {
       "path": "agent.md",
       "copy_of": ".claude/agents/crm-steward.md",
-      "sha256": "5cd7bae8d02353e1959607c8cad46ff31e7a78696fe2be191132f0a28a118f07"
+      "sha256": "7e8025b5e4cd5e304fc63b278ddb7390e166532332905d9081fca35fbb12adc9"
     },
     {
       "path": "export/activity.csv",
@@ -28,7 +28,7 @@
     {
       "path": "export/contacts.csv",
       "copy_of": "examples/crm/crm-3/contacts.csv",
-      "sha256": "f0142a9334c1e8d7c01f833e498aef7ff00c99a34d6aeee1a9d26d744843d8e2"
+      "sha256": "ede1abd5fb166391aaa0ded27bf29f2571ab93ba05ca6610ab6848a5e101c4c1"
     },
     {
       "path": "export/partners.csv",
@@ -44,5 +44,5 @@
     "the checker"
   ],
   "output": "output.md: the session's final answer, line endings normalised to LF, otherwise unedited",
-  "output_sha256": "e1d545fe47c0a0ce55a802335731607b1a0ecb958361f3bab3cf2781bb9a2ad6"
+  "output_sha256": "2d38bb1edd8b8db38810bfd8a774752d4e8e8dbb007c735bcbb9c75538d55319"
 }

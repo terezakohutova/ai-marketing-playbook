@@ -1,27 +1,27 @@
-**Proposal queue** (read-only pass over `export/storefront.csv`, `marketplace-a.csv` and `marketplace-b.csv`)
+**Proposal queue** (read-only snapshot of the three exports)
 
-I treated `storefront.csv` as the source of truth because it is the storefront export. All three files use `item_id`, `title` and `status`, so no columns needed remapping. None of them has quantity columns, so I did not apply the quantity rules I5 and I6. I also couldn't find `cross-platform-inventory-sync.md` in the project. I worked from the rules in my instructions alone.
+Source of truth: `storefront.csv`. It is the storefront export, and the two marketplace files are the channels. All three files use `item_id` for the item id and `status` for the status. None has a quantity or notes column, so I5 and I6 could not be checked. `cross-platform-inventory-sync.md` is not in the folder, so I worked from the rules alone.
 
 | Rule | Bucket | Item | Evidence |
 |---|---|---|---|
-| I1 | confirmed | PRT-101 | The storefront says `sold`. Marketplace A still shows `live`. |
-| I2 | human | PRT-101 | The storefront says `sold`. Marketplace B shows `reserved`. This could be a pending order or a stale hold. To resolve it, check B's reservation or order record and whether a sale was actually completed. |
-| I1 | confirmed | PRT-110 | The storefront says `sold`. Marketplace B still shows `live`. |
-| I2 | human | PRT-105 | The storefront says `reserved`. Marketplace A and Marketplace B both show `live`. To resolve it, check who holds the reservation and whether it is still active. The storefront's own record of the reservation would show this. |
-| I2 | human | PRT-107 | The storefront says `live`. Marketplace A says `sold`. To resolve it, check Marketplace A's order record for a sale. If a sale exists, the storefront stock count is wrong. If not, A's status is wrong. |
-| I3 | human | PRT-108 | Marketplace A lists it as `sold`. The storefront has no record of the item. To resolve it, check whether the item was ever in inventory or was removed from the storefront export. |
+| I1 | confirmed | PRT-101 | Storefront says `sold`. marketplace-a still shows `live`. |
+| I1 | confirmed | PRT-110 | Storefront says `sold`. marketplace-b still shows `live`. marketplace-a does not list it. |
+| I2 | human | PRT-101 | marketplace-b says `reserved`, while the storefront says `sold`. A status that is neither live nor sold is not the I1 case. To resolve it, check whether a pending order or hold exists for this item and whether it was actually sold. |
+| I2 | human | PRT-105 | Storefront says `reserved`. marketplace-a says `live` and marketplace-b says `live`. To resolve it, find out who holds the reservation and whether the item should stay on sale. |
+| I2 | human | PRT-107 | Storefront says `live`. marketplace-a says `sold`. To resolve it, check the order records for a real sale on marketplace-a, since the storefront may not have registered it. |
+| I3 | human | PRT-108 | marketplace-a lists it as `sold`. The storefront has no record of it. To resolve it, confirm whether it is a legacy or mistaken listing, or an item missing from the storefront. |
 
-I1 is a rule match on the storefront's own status, not an instruction to act. Any delist for PRT-101 or PRT-110 still goes through the queue.
+No item appears on more than one row of a file, so I4 did not fire.
 
-Five items had every listing agreeing with the storefront: PRT-102, 103, 104, 106 and 109. Case and spacing differences such as `Live` and `LIVE` count as matching. PRT-104 and PRT-110 are not listed on Marketplace A, and PRT-102, PRT-107 and PRT-108 are not listed on Marketplace B. I did not count those gaps as discrepancies. I found no duplicate rows in any file, so I4 did not fire.
+5 items were clean, with every channel that lists them matching the storefront: PRT-102, PRT-103, PRT-104, PRT-106 and PRT-109. Statuses were compared after trimming and ignoring case, so `Live` and `LIVE` match `live`.
 
-**What I did not do:** I made no changes to any channel or to the source of truth. I did not delist, mark anything sold, or resolve any human-bucket item by trusting one side. This is a snapshot of the exports as they were taken.
+**What I did not do:** I made no changes. This is a read-only pass. The I1 items are proposals for the queue, not actions taken. I did not delist, mark sold, or change anything on any channel.
 
 ```findings
 [
   {"rule": "I1", "entity": "PRT-101", "bucket": "confirmed"},
-  {"rule": "I2", "entity": "PRT-101", "bucket": "human"},
   {"rule": "I1", "entity": "PRT-110", "bucket": "confirmed"},
+  {"rule": "I2", "entity": "PRT-101", "bucket": "human"},
   {"rule": "I2", "entity": "PRT-105", "bucket": "human"},
   {"rule": "I2", "entity": "PRT-107", "bucket": "human"},
   {"rule": "I3", "entity": "PRT-108", "bucket": "human"}

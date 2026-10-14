@@ -18,7 +18,7 @@
     {
       "path": "agent.md",
       "copy_of": ".claude/agents/inventory-sync.md",
-      "sha256": "10e670f5a25be2474abf5fbef152558a3638e7da8a696e56fa65fe6004150195"
+      "sha256": "6fe019f97bcf8f3e03a40d0a6eb408d5b8aa0c20452aa05497d13ea3b5327136"
     },
     {
       "path": "export/auction-site.csv",
@@ -49,5 +49,5 @@
     "the checker"
   ],
   "output": "output.md: the session's final answer, line endings normalised to LF, otherwise unedited",
-  "output_sha256": "b1306318b131b5ce5e23d4dee7e9175507fce2d8fe673ad128277e90fd7e532a"
+  "output_sha256": "79a83bd6e7b2d50d02e5a4e82fef285e3fc3c3dc320070144e7e7cd6e1185b2d"
 }

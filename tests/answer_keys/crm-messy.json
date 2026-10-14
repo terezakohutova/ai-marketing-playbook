@@ -140,6 +140,6 @@
     }
   ],
   "revisions": [
-    "After the blind run, tools/key_vs_checker.py on header- and date-repaired data showed the checker flagging E2 P05, which the hand-written key had missed. The rule text has no open-partner condition, so the key was wrong and E2 P05 was added. The blind run missed it as well; it is scored as a miss."
+    "After the blind run, tools/key_vs_checker.py on header- and date-repaired data showed the checker flagging E2 P05, which the hand-written key had missed. The rule text has no open-partner condition, so the key was wrong and E2 P05 was added. The blind run of that day missed it as well and was scored as a miss. That run and its agent prompt, which quoted strings from this dataset, are in git history; the current runs use prompts with no dataset strings in them."
   ]
 }

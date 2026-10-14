@@ -27,17 +27,17 @@ when they were taken, not what is happening now.
 2. Compare every channel's listing status against the source of truth,
    item by item. Not channel against channel directly, everything against
    the one system that's supposed to reflect real inventory. Statuses
-   compare after trimming spaces and ignoring case (`LIVE ` is `live`).
+   compare after trimming spaces and ignoring case.
    An item a channel doesn't list at all is not a discrepancy.
 
-   Exports are often messy. Map renamed columns by meaning (`SKU` or
-   `Item ID` is the item id, `state` or `Listing status` is the status,
-   `Qty on hand` is on-hand stock, `qty_listed` or `Available` is the
+   Exports are often messy. Map renamed columns by meaning (for example
+   `Product code` or `Article no.` is the item id, `Publication status` is
+   the status, `Units in warehouse` is on-hand stock, `Offered qty` is the
    quantity a channel offers) and say which column you used for what.
-   Map free-text statuses onto live / sold / something else: `Active`,
-   `available` or `in stock` are live; `Sold out` or `out of stock` are
-   sold; anything else (`reserved`, `ended`, `paused till Feb`) is
-   "something else". Quote the original wording in the evidence. Read
+   Map free-text statuses onto live / sold / something else by what they
+   mean (for example `published` is live, `no longer available` or
+   `sold-through` is sold, `on hold` or `taken down` is "something
+   else"). Quote the original wording in the evidence. Read
    notes columns: they don't change which rule fires, but put what they
    say in the evidence, because they are often what a person needs to
    decide.
@@ -52,7 +52,7 @@ when they were taken, not what is happening now.
    | Rule | Bucket | Fires when |
    |---|---|---|
    | I1 | confirmed | The source of truth says sold and at least one channel still shows it live. This is unambiguous: the channel is stale. |
-   | I2 | human | A channel shows a status that differs from the source of truth and isn't the I1 case (a channel says sold and the source of truth doesn't, a status like `reserved` or `ended`, a source of truth that says something other than live or sold). You have no way to confirm which side is right, so don't resolve it by trusting either one. Say what information would resolve it. |
+   | I2 | human | A channel shows a status that differs from the source of truth and isn't the I1 case (a channel says sold and the source of truth doesn't, a channel status that is neither live nor sold, a source of truth that says something other than live or sold). You have no way to confirm which side is right, so don't resolve it by trusting either one. Say what information would resolve it. |
    | I3 | human | A channel lists an item the source of truth has no record of. |
    | I4 | human | The same item appears on more than one row of one file. |
    | I5 | confirmed | One channel alone lists more units than the source of truth has on hand. The fix (lower that channel's quantity to the on-hand count) has one right answer. |
@@ -76,8 +76,8 @@ finding, fenced exactly like this:
 ````
 ```findings
 [
-  {"rule": "I1", "entity": "ITM-014", "bucket": "confirmed"},
-  {"rule": "I2", "entity": "ITM-022", "bucket": "human"}
+  {"rule": "I1", "entity": "ITM-901", "bucket": "confirmed"},
+  {"rule": "I2", "entity": "ITM-902", "bucket": "human"}
 ]
 ```
 ````

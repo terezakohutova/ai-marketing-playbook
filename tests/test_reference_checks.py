@@ -7,6 +7,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -429,7 +430,16 @@ EXPECTED_RUN_SCORES = {
     "crm-1": (13, 0, 0),
     "crm-2": (11, 0, 0),
     "crm-3": (11, 0, 0),
-    "crm-messy": (15, 0, 1),  # missed E2 P05, see tests/answer_keys/crm-messy.json "revisions"
+    "crm-messy": (16, 0, 0),
+}
+
+# Extra blind runs of the messy datasets, same harness, to show the result
+# is not a one-off: examples/runs/<dataset>/repeats/run-N/.
+EXPECTED_REPEAT_SCORES = {
+    ("crm-messy", "run-2"): (16, 0, 0),
+    ("crm-messy", "run-3"): (16, 0, 0),
+    ("inv-messy", "run-2"): (9, 0, 0),
+    ("inv-messy", "run-3"): (9, 0, 0),
 }
 
 
@@ -469,6 +479,39 @@ class CommittedRuns(unittest.TestCase):
             for f in meta["files_given"]:
                 with self.subTest(dataset=name, file=f["copy_of"]):
                     self.assertEqual(sha256(ROOT / f["copy_of"]), f["sha256"])
+
+    def test_repeats_are_pinned_and_match_the_files(self):
+        found = {(p.parent.parent.parent.name, p.parent.name) for p in RUNS.glob("*/repeats/*/output.md")}
+        self.assertEqual(found, set(EXPECTED_REPEAT_SCORES))
+        for (name, run), (tp, fp, fn) in EXPECTED_REPEAT_SCORES.items():
+            folder = RUNS / name / "repeats" / run
+            with self.subTest(dataset=name, run=run):
+                s = score(load_key(name), parse_findings((folder / "output.md").read_text(encoding="utf-8")))
+                self.assertEqual((len(s.tp), len(s.fp), len(s.fn)), (tp, fp, fn))
+                meta = json.loads((folder / "run.json").read_text(encoding="utf-8"))
+                self.assertEqual(meta["tools_available"], ["Read", "Grep", "Glob"])
+                self.assertEqual(sha256(folder / "output.md"), meta["output_sha256"])
+                for f in meta["files_given"]:
+                    self.assertEqual(sha256(ROOT / f["copy_of"]), f["sha256"], f["copy_of"])
+
+
+# The agent prompts must not hand the model the answers: no example string in
+# them (in `code` or "quotes") may appear in any dataset. The only exceptions
+# are the clean schema's own field names and contact statuses, which the rule
+# tables define and the checker uses too.
+RULE_VOCABULARY = {"active", "former", "to verify", "contact_id", "partner_id", "last_contact", "live_offers",
+                   "confirmed", "all", "and"}
+
+
+class PromptsDoNotLeakTheData(unittest.TestCase):
+    def test_no_dataset_string_in_the_agent_prompts(self):
+        data = "\n".join(p.read_text(encoding="utf-8") for p in (ROOT / "examples").glob("*/*/*.csv")).lower()
+        for agent in (ROOT / ".claude" / "agents").glob("*.md"):
+            body = agent.read_text(encoding="utf-8").split("---", 2)[2]
+            examples = set(re.findall(r"`([^`\n]+)`", body)) | set(re.findall(r'"([^"\n]{3,})"', body))
+            with self.subTest(agent=agent.name):
+                leaked = sorted(e for e in examples if e.lower() in data and e.lower() not in RULE_VOCABULARY)
+                self.assertEqual(leaked, [])
 
 
 # --------------------------------------------------------------- apply

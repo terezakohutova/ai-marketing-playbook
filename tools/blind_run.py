@@ -38,7 +38,8 @@ PROMPT = ("Do the task your instructions describe on the exports in the folder e
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # LF-normalised, like the test that checks these hashes, so a Windows checkout gives the same value
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def split_agent(text: str) -> tuple[dict[str, str], str]:

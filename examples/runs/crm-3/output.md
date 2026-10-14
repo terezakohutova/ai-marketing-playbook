@@ -1,40 +1,40 @@
-**Today:** I used 2027-01-15, the newest date in `activity.csv`. There is no README with an as-of date. The data is fresh under rule A1: `nightly-sync` and `morning-digest` both have a log line every day from 2027-01-09 to 2027-01-15, with no gaps.
+**Today:** I used 2027-01-15, the newest date in `activity.csv`, because there is no README with an as-of date. The data is fresh under rule A1. `nightly-sync` and `morning-digest` each have a log line on every day from 2027-01-09 to 2027-01-15, with no gaps.
 
-I mapped columns by name, and none were renamed. The one bounce in the log is the P03 line, which names `Theo.Marsh@cobaltcycling.example` as the failed address.
+I used the columns as named, with no renames. Contact C09 is absent from the file, but nothing points to it, so it is not a finding.
 
 | ID | Rule | Partner | What's wrong | Evidence | Severity | Proposed fix (who decides) |
 |---|---|---|---|---|---|---|
-| 1 | B1 | P01+P02 | Likely duplicate partners | "Brightwater GmbH" and "Brightwater" are the same name once "gmbh" is dropped. Their contacts C01 and C02 share the domain `brightwater.example`. The two records have different status, market and owner (Live/DE/Ana vs Prospect/AT/Lukas). | High | A person decides whether to merge. Nothing is merged automatically (person). |
-| 2 | B3 | P06 | Partner id appears on two rows | The P06 "Meadowlark Games" row appears twice with identical values. | Medium | A person removes the duplicate row (person). |
-| 3 | C1 | P04 | Lost partner still has live offers | Status Lost, `live_offers` = 1. | High | A person checks whether the offer is really still live and ends it, or corrects the status (person). |
-| 4 | D4 | P03 | Cold partner | Priority B, window 30 days. `last_contact` is 2026-12-10, and the only e-mail in the log is a bounce. That makes 36 days. | Medium | The owner (Ana) re-engages. The bounced contact needs replacing first (person). |
-| 5 | D4 | P05 | Cold partner | Priority C, window 60 days. `last_contact` is 2026-11-01, which is 75 days ago. | Medium | The owner (Ana) re-engages or reviews the priority (person). |
-| 6 | D1 | P03 | Open partner has a next step but no date | Live, next step "Review Q4 numbers", `next_step_date` empty. | Medium | The owner sets a date (person). |
-| 7 | D2 | P06 | Next step is overdue | `next_step_date` 2027-01-08 is before 2027-01-15, for "Holiday recap". | Medium | The owner (Lukas) completes the step or reschedules it (person). |
-| 8 | E1 | C03 (P03) | Contact bounced but is still Active | The 2027-01-13 notice says "address not found" for `Theo.Marsh@cobaltcycling.example`. C03 has `theo.marsh@cobaltcycling.example` and status Active. | Medium | Set C03 to To verify or Former. Only one answer is correct (safe to apply). |
-| 9 | E2 | P05 | No usable contact | C06 is To verify and C07 is Former. | Medium | A person finds a valid contact (person). |
-| 10 | E2 | P02 | No usable contact | The only contact, C02, is To verify. | Low | A person verifies C02 (person). |
-| 11 | F2 | P05 | Open partner has no market | Negotiation, `market` empty. | Low | A person sets the market (person). |
+| 1 | C1 | P04 Linden Botanicals | Lost partner still has live offers | status=Lost, live_offers=1 | High | Check whether the offer is really live. Then end the offer or reconsider the status (person). |
+| 2 | B1 | P01+P02 | Near-same names, and the contacts share a company domain | "Brightwater GmbH" and "Brightwater" both normalise to "brightwater". C01 jana@brightwater.example and C02 felix@brightwater.example share brightwater.example. | High | Decide whether to merge. P01 is Live/A/DE and P02 is Prospect/B/AT (person). |
+| 3 | B3 | P06 | Same `partner_id` on two rows | Two identical rows for P06 Meadowlark Games in `partners.csv` | Medium | Remove the duplicate row after a person confirms (person). |
+| 4 | E1 | C03 (P03) | Contact address bounced but is still Active | 2027-01-13 notice: "Delivery Status Notification (Failure): Theo.Marsh@cobaltcycling.example - address not found". C03 is theo.marsh@cobaltcycling.example with status Active. | Medium | Set C03 to To verify or Former (safe to apply). |
+| 5 | D4 | P03 Cobalt Cycling | Cold. The bounce does not count as contact. | Priority B (30-day window). Last contact is 2026-12-10, which is 36 days ago. The only log line since then is the bounce. | Medium | Reach Ida Kern (C04) and refresh the relationship (person). |
+| 6 | D4 | P05 Sundial Watches | Cold | Priority C (60-day window). Last contact is 2026-11-01, which is 75 days ago. | Medium | Contact them, or re-rank the partner (person). |
+| 7 | D1 | P03 Cobalt Cycling | Open partner has a next step but no date | next_step="Review Q4 numbers", next_step_date empty | Medium | Set a date (person). |
+| 8 | D2 | P06 Meadowlark Games | Next step is overdue | next_step_date=2027-01-08, before 2027-01-15, for "Holiday recap" | Medium | Do the step or reschedule it (person). |
+| 9 | E2 | P05 Sundial Watches | No usable contact | C06 Omar Haddad is To verify and C07 Rhea Stone is Former | Medium | Verify Omar or find a new contact (person). |
+| 10 | E2 | P02 Brightwater | No usable contact | The only contact, C02 Felix Roth, is To verify | Low | Verify Felix. Fold this into the B1 decision (person). |
+| 11 | F2 | P05 Sundial Watches | Open partner has no market | market empty, status Negotiation | Low | Assign a market (person). |
 
-**Today's three**
-1. **B1 P01+P02:** a duplicate Brightwater record splits the history and ownership of a Live A-priority partner. Fix it before anyone acts on either record.
-2. **C1 P04:** a Lost partner with a live offer is a contradiction that may have a real commercial effect.
-3. **D4 P05:** a Negotiation partner with 75 days of silence and no valid contact (E2) is the deal most at risk of being lost. P03, which went cold and has a bounced contact, is next.
+**Today's three:**
+1. **P04 (C1):** a Lost partner with a live offer may still be running something. This is the biggest contradiction in the data.
+2. **P01+P02 (B1):** a possible duplicate involving a Live A-priority partner. Any other work on either record may be wasted until this is decided.
+3. **P05 (D4):** the partner is in Negotiation and has had no contact for 75 days. It also has no verified contact (E2) and no market (F2), so one conversation could fix all three.
 
-Three of the nine partners (P07, P08 and P09) had no findings.
+Of the 9 partners, 2 were clean: P08 and P09. The other 7 have at least one finding. P07 is Paused with no problems, so it is clean too, which makes 3 clean partners.
 
-**What I did NOT do:** I made no changes. This was a read-only pass, and the safe fix for C03 is only proposed.
+**What I did not do:** I made no changes. This was a read-only pass. Every fix above, including the safe-to-apply one (E1 on C03), is a proposal and is not applied.
 
 ```findings
 [
+  {"rule": "C1", "entity": "P04", "bucket": "person"},
   {"rule": "B1", "entity": "P01+P02", "bucket": "person"},
   {"rule": "B3", "entity": "P06", "bucket": "person"},
-  {"rule": "C1", "entity": "P04", "bucket": "person"},
+  {"rule": "E1", "entity": "C03", "bucket": "safe"},
   {"rule": "D4", "entity": "P03", "bucket": "person"},
   {"rule": "D4", "entity": "P05", "bucket": "person"},
   {"rule": "D1", "entity": "P03", "bucket": "person"},
   {"rule": "D2", "entity": "P06", "bucket": "person"},
-  {"rule": "E1", "entity": "C03", "bucket": "safe"},
   {"rule": "E2", "entity": "P05", "bucket": "person"},
   {"rule": "E2", "entity": "P02", "bucket": "person"},
   {"rule": "F2", "entity": "P05", "bucket": "person"}
