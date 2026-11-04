@@ -157,7 +157,7 @@ python tools/score_run.py --all --per-rule
 python tools/key_vs_checker.py
 ```
 
-CI runs these on Python 3.9 and 3.13, on Ubuntu and Windows, plus
+CI runs these on Python 3.10 and 3.13, on Ubuntu and Windows, plus
 [ruff](https://docs.astral.sh/ruff/).
 
 ## Run an agent yourself
